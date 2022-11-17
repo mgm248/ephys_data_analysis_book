@@ -1,0 +1,730 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Spike-LFP Coupling &#8212; Analysis of Electrophysiological Data in Neuroscience</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Spike train analyses" href="3_ST_SpikeTrain_Analyses.html" />
+    <link rel="prev" title="Coherence and Directionality" href="1_LFP_Coherence_Directionality.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/cpl_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Analysis of Electrophysiological Data in Neuroscience</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Analysis of Electrophysiological Data in Neuroscience
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="0_LFP_Identifying_Oscillations.html">
+   Identifying Oscillations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="1_LFP_Coherence_Directionality.html">
+   Coherence and Directionality
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Spike-LFP Coupling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3_ST_SpikeTrain_Analyses.html">
+   Spike train analyses
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4_ST_Spike_Synchrony.html">
+   Spike Synchrony
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/2_ST_LFP_Spike_LFP_Coupling.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F2_ST_LFP_Spike_LFP_Coupling.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/2_ST_LFP_Spike_LFP_Coupling.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filtering-and-phase">
+   Filtering and Phase
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quantify-spike-lfp-coupling">
+   Quantify Spike LFP-Coupling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Spike-LFP Coupling</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filtering-and-phase">
+   Filtering and Phase
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quantify-spike-lfp-coupling">
+   Quantify Spike LFP-Coupling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="spike-lfp-coupling">
+<h1>Spike-LFP Coupling<a class="headerlink" href="#spike-lfp-coupling" title="Permalink to this headline">#</a></h1>
+<p>Neural oscillations affect the spike timing of neurons. Identifying how neurons fire in relation to oscillations can help uncover which neurons participate in an oscillation, and and to what degree. This notebook will demonstrate how to quantify how the spike timing of neurons relates to underlying oscillations. Specifically, this notebook shows how to:</p>
+<ol class="simple">
+<li><p>Filter data into a frequency band</p></li>
+<li><p>Extract phase information</p></li>
+<li><p>Visualize spike-lfp coupling</p></li>
+<li><p>Quantify spike-lfp coupling</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">butter</span><span class="p">,</span> <span class="n">filtfilt</span><span class="p">,</span> <span class="n">hilbert</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s start by simulating an oscillation, and a neuron that tends to fire at the trough of the oscillation. We’ll plot the spikes as vertical lines over the lfp.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Simulate LFP</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">freq</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">lfp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">times</span><span class="p">[:]</span> <span class="o">*</span> <span class="n">freq</span><span class="p">)</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">lfp</span> <span class="o">+=</span> <span class="n">noise</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">lfp</span><span class="p">)</span>
+<span class="c1">#Simulate neuron</span>
+<span class="n">spike_times</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">lfp_min0</span> <span class="o">=</span> <span class="n">lfp</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lfp</span><span class="p">)</span><span class="o">+</span><span class="mf">.001</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
+    <span class="n">probability</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">lfp_min0</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="mi">10</span>
+    <span class="k">if</span> <span class="n">probability</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">probability</span><span class="p">,</span> <span class="n">probability</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">sample</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">spike_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">spike</span> <span class="ow">in</span> <span class="n">spike_times</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">spike</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2_ST_LFP_Spike_LFP_Coupling_3_0.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_3_0.png" />
+</div>
+</div>
+<p>We’ll want to look at how the neuron fires with respect to some particular oscillation, or frequency band. To do so, we need to filter the lfp signal into a range of interest. Let’s start by filtering in the beta (12-32Hz) band.</p>
+<section id="filtering-and-phase">
+<h2>Filtering and Phase<a class="headerlink" href="#filtering-and-phase" title="Permalink to this headline">#</a></h2>
+<p>Filtering is used to emphasize or demphasize activity in particular frequencies in time-series. Common applications of filters to neural electrophysiological data are to remove 60Hz line noise, remove low frequency activity for spike detection / remove high frequency activity for LFP analyses, and to isolate specific oscillations.</p>
+<p>There are many commonly used filter designs, with customizable parameters. The goal of each filter is to maximize the attennuation of unwanted frequencies, which can be best achieved using filters with a narrow transition band in frequency space. However, these “sharp” filters produce stronger signal distortions and ringing artifacts. Therefore, choices in filter design often come down to this trade-off <a class="reference external" href="#References">[1]</a>. Additionally, higher filter orders effectively decrease the time resolution while increasing the frequency resolution. Here, we’ll use a butterworth filter, which is maximally uniform in how it affects the magnitude of activity in the filtered frequency range. Additionally, we’ll use an order of 4. Feel free to try other filter designs (cheby2, bessel) or orders to see their affects.</p>
+<p>Filters are often applied through convolution over the signal. This can distort phase estimation, as convolving in a particular direction will result in a phase shift. To eliminate this shift, filters can be convolved once forwards and then backwards, which we will do with scipy’s <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.filtfilt.html">filtfilt</a> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">order</span><span class="o">=</span><span class="mi">4</span>
+<span class="n">freq_band</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">32</span><span class="p">]</span>
+<span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">butter</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">freq_band</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">btype</span><span class="o">=</span><span class="s1">&#39;band&#39;</span><span class="p">)</span>
+<span class="n">filt_data</span> <span class="o">=</span> <span class="n">filtfilt</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">lfp</span><span class="p">,</span> <span class="n">padtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">filt_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1e064233400&gt;]
+</pre></div>
+</div>
+<img alt="_images/2_ST_LFP_Spike_LFP_Coupling_5_1.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_5_1.png" />
+</div>
+</div>
+<p>As you can see, we’ve removed a lot of the noise and cleanly uncovered the underlying oscillation.</p>
+<p>Now we have extracted our oscillation, but we want to see whether the neuron’s spike timing is affected by this oscillation. One useful way to investigate this question is to look at whether the neuron tends to fire at some particular phase of the oscillation more than others. We therefore start by extracting the phase information for this oscillation. To get this, you use the hilbert transform to produce the analytic signal. This analytic signal is complex valued and contains both the instantaneous amplitude and phase information for our signal. The phase can be easily extracted by calling np.angle() function on the analytic signal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">analytic_signal</span> <span class="o">=</span> <span class="n">hilbert</span><span class="p">(</span><span class="n">filt_data</span><span class="p">)</span>
+<span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">analytic_signal</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">phase</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Phase (degrees)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Phase (degrees)&#39;)
+</pre></div>
+</div>
+<img alt="_images/2_ST_LFP_Spike_LFP_Coupling_7_1.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_7_1.png" />
+</div>
+</div>
+</section>
+<section id="quantify-spike-lfp-coupling">
+<h2>Quantify Spike LFP-Coupling<a class="headerlink" href="#quantify-spike-lfp-coupling" title="Permalink to this headline">#</a></h2>
+<p>Now let’s try to see how the spike times of the neuron align to this beta oscillation. A good way to start is to create a histogram of these spike times by binning over their oscillation phase.</p>
+<p>First, let’s collect the phases when the neuron spiked.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spike_phases</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">spike_time</span> <span class="ow">in</span> <span class="n">spike_times</span><span class="p">:</span>
+    <span class="n">spike_phases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phase</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">spike_time</span><span class="o">*</span><span class="n">fs</span><span class="p">))])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To create the histogram, we then bin these spike phases using numpy’s digitize function, and then count up how many phases we have in each phase bin.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_bins</span> <span class="o">=</span> <span class="mi">18</span>
+<span class="n">phase_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">binned_phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">,</span> <span class="n">phase_bins</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">spike_phase_hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_bins</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="nb">bin</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">spike_phase_hist</span><span class="p">[</span><span class="nb">bin</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">binned_phases</span> <span class="o">==</span> <span class="nb">bin</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spike_phase_hist</span><span class="p">)</span>
+
+<span class="c1">#Plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">polar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">phase_bins</span><span class="p">,</span> <span class="n">spike_phase_hist</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">phase_bins</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">phase_bins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0. 10.  6.  7.  7.  3.  3.  0.  0.  0.  0.  0.  0.  1.  2.  4.  7.  3.
+ 15.]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;BarContainer object of 19 artists&gt;
+</pre></div>
+</div>
+<img alt="_images/2_ST_LFP_Spike_LFP_Coupling_11_2.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_11_2.png" />
+</div>
+</div>
+<p>We can now see spikes are more likely to fire around 180 degrees phase, or the trough, of the oscillation. Let’s try to quantify the extent of this spike-phase coupling. To do so, I’ll use mean vector length, and pairwise phase coherence.</p>
+<p><strong>Mean Vector length</strong></p>
+<p>A common way to measure spike phase locking is to take the length of the mean vector of the spike-phase distribution <a class="reference external" href="#References">[2]</a>. If spikes are uniformally distributed with respect to phase, the mean of this distribution will be a point close to the center of the circle, and its radius will be close to 0. On the other hand, if spikes are clustered around some particular phase, the mean vector will point towards that phase and thus will have a radius closer to 1.</p>
+<p>To calculate the mean vector length (mvl) of our distribution, we first need to map the spike phase distribution into polar coordinates and then take their mean. The mvl is then the distance of this point from (0,0).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MVL</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">):</span>
+    <span class="n">a_cos</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">spike_phases</span><span class="p">)</span>
+    <span class="n">a_sin</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">spike_phases</span><span class="p">)</span>
+    <span class="n">a_cos</span><span class="p">,</span> <span class="n">a_sin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">a_cos</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">fromiter</span><span class="p">(</span><span class="n">a_sin</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> 
+    <span class="n">uv_x</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a_cos</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">a_cos</span><span class="p">)</span>
+    <span class="n">uv_y</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a_sin</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">a_sin</span><span class="p">)</span>
+    <span class="n">uv_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">uv_x</span><span class="o">*</span><span class="n">uv_x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">uv_y</span><span class="o">*</span><span class="n">uv_y</span><span class="p">))</span>
+    <span class="n">p_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">uv_radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)),</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">uv_radius</span><span class="p">,</span> <span class="n">p_value</span>
+
+<span class="n">vec_length</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">MVL</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean vector length: &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">vec_length</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;, p value: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">pval</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean vector length: 0.657, p value: 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>We get a p value of 0, indicating phase locking is highly significant.
+However, this measure is highly dependent on the number of spikes in our sample <a class="reference external" href="#References">[3]</a>, as small samples will lead to a mean centered away from (0,0) even if spike phases are uniformally distributed.</p>
+<p>One way to get around this is to repeatedly estimate the mvl on a surrogate spike phase distribution with the same number of samples as our actual sample, and estimate the difference between our real result and these surrogate estimates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_surrogates</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">sample_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">)</span>
+<span class="n">mvl_surrogates</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_surrogates</span>
+<span class="k">for</span> <span class="n">surr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_surrogates</span><span class="p">):</span>
+    <span class="n">spike_phases_surr</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">phase</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">sample_size</span><span class="p">)</span> <span class="c1">#see note</span>
+    <span class="n">mvl_surrogates</span><span class="p">[</span><span class="n">surr</span><span class="p">],</span> <span class="n">p</span> <span class="o">=</span> <span class="n">MVL</span><span class="p">(</span><span class="n">spike_phases_surr</span><span class="p">)</span>
+
+<span class="n">z_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">vec_length</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mvl_surrogates</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">mvl_surrogates</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mvl_surrogates</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">vec_length</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">.6</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;Z-score: &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">z_score</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.6, 20, &#39;Z-score: 9.70983737877545&#39;)
+</pre></div>
+</div>
+<img alt="_images/2_ST_LFP_Spike_LFP_Coupling_15_1.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_15_1.png" />
+</div>
+</div>
+<p>The real mvl is clearly significantly higher than these surrogates, indicating spike-phase coupling is significant.</p>
+<p><em>Note</em>: We could have randomly sampled from any number between -np.pi and np.pi, but instead I sampled from the actual observed phase values. This controls for a potential bias of spike-phase locking estimation, where not all phase values are observed in the oscillation itself. This occurs in smaller samples, where the length of the sample is less than a full cycle. If not all phases are observed, than the spike-phase distribution will be artificially non-uniform, and significant when compared to a surrogate distribution containing all possible phase values.</p>
+<p><strong>Pairwise Phase Consistency</strong></p>
+<p>Alternatively, another measure of spike-phase locking, pairwise phase consistency (ppc), is unbiased by the number of samples <a class="reference external" href="#References">[3]</a>. The measure computes the cosine of the angular distance between each pair of phases, resulting in an output of 1 for pairs of the same phase and -1 for antiphase pairs. After averaging across pairs, the measure will approach 0 for a uniform phase distribution and 1 for a perfectly aligned phase distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">PPC</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">):</span>
+    <span class="n">sp_complex</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">spike_phases</span><span class="p">)</span>
+    <span class="n">all_com</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">sp_complex</span> <span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">dp_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">combination</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_com</span><span class="p">):</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">combination</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">combination</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">dp_array</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span>
+    <span class="n">dp_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dp_array</span><span class="p">)</span>
+    <span class="n">ppc</span> <span class="o">=</span> <span class="n">dp_sum</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">dp_array</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ppc</span>
+    
+<span class="n">ppc_val</span> <span class="o">=</span> <span class="n">PPC</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PPC: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ppc_val</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PPC: 0.4230545209504523
+</pre></div>
+</div>
+</div>
+</div>
+<p>The only disadvantage of using ppc over mvl is ppc, by computing the dot product between each possible phase pair, takes longer. Let’s illustrate that by measuring the time each function takes for a sample with 1000 phases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spike_phases</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)]</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span>
+<span class="n">MVL</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">)</span>
+<span class="n">stop</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean Vector Length process time: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">stop</span><span class="o">-</span><span class="n">start</span><span class="p">))</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span>
+<span class="n">PPC</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">)</span>
+<span class="n">stop</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pairwise Phase Consistency process time: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">stop</span><span class="o">-</span><span class="n">start</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Vector Length process time: 0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pairwise Phase Consistency process time: 1.453125
+</pre></div>
+</div>
+</div>
+</div>
+<p>Clearly the PPC take significantly longer to compute. Though this time is still tolerable, or if you were to run ppc on many surrogate distributions (to capture the bias of the measure due to an incomplete phase distribution, for example), this time can add up. Therefore, when comparing with surrogate data, the mvl is more often used.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>Widmann, A., Schröger, E., &amp; Maess, B. (2015). Digital filter design for electrophysiological data – a practical approach. Journal of Neuroscience Methods, 250, 34–46. <a class="reference external" href="https://doi.org/10.1016/J.JNEUMETH.2014.08.002">https://doi.org/10.1016/J.JNEUMETH.2014.08.002</a></p></li>
+<li><p>Canolty RT, Edwards E, Dalal SS, Soltani M, Nagarajan SS, Kirsch HE, et al. High Gamma Power Is Phase-Locked to Theta Oscillations in Human Neocortex. Science (80- ) [Internet]. 2006 Sep 15 [cited 2019 Aug 7];313(5793):1626–8. Available from: <a class="reference external" href="http://www.sciencemag.org/cgi/doi/10.1126/science.1128115">http://www.sciencemag.org/cgi/doi/10.1126/science.1128115</a></p></li>
+<li><p>Vinck M, van Wingerden M, Womelsdorf T, Fries P, Pennartz CMA. The pairwise phase consistency: A bias-free measure of rhythmic neuronal synchronization. Neuroimage. 2010 May 15;51(1):112–22.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="1_LFP_Coherence_Directionality.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Coherence and Directionality</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="3_ST_SpikeTrain_Analyses.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Spike train analyses</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Michael Mariscal<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
