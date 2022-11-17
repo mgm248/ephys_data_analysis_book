@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Spike-LFP Coupling &#8212; My sample book</title>
+    <title>Spike-LFP Coupling &#8212; Analysis of Electrophysiological Data in Neuroscience</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -96,10 +96,10 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="_static/logo.png" class="logo" alt="logo">
+      <img src="_static/cpl_logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">My sample book</h1>
+      <h1 class="site-logo" id="site-title">Analysis of Electrophysiological Data in Neuroscience</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -111,14 +111,14 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Welcome to your Jupyter Book
+                    Analysis of Electrophysiological Data in Neuroscience
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="0_LFP_Identifying_Oscillations.html">
-   Identifying oscillations
+   Identifying Oscillations
   </a>
  </li>
  <li class="toctree-l1">
@@ -138,7 +138,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="4_ST_Spike_Synchrony.html">
-   Spike synchrony
+   Spike Synchrony
   </a>
  </li>
 </ul>
@@ -347,29 +347,20 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Spike-LFP Coupling
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filtering-and-phase">
+   Filtering and Phase
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#filtering-and-phase">
-     Filtering and phase
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   Spike LFP-Coupling
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quantify-spike-lfp-coupling">
+   Quantify Spike LFP-Coupling
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#references">
-     References
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
  </li>
 </ul>
 
@@ -390,29 +381,20 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Spike-LFP Coupling
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filtering-and-phase">
+   Filtering and Phase
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#filtering-and-phase">
-     Filtering and phase
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   Spike LFP-Coupling
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quantify-spike-lfp-coupling">
+   Quantify Spike LFP-Coupling
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#references">
-     References
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
  </li>
 </ul>
 
@@ -478,7 +460,7 @@ title="Print to PDF"
 </div>
 <p>We’ll want to look at how the neuron fires with respect to some particular oscillation, or frequency band. To do so, we need to filter the lfp signal into a range of interest. Let’s start by filtering in the beta (12-32Hz) band.</p>
 <section id="filtering-and-phase">
-<h2>Filtering and phase<a class="headerlink" href="#filtering-and-phase" title="Permalink to this headline">#</a></h2>
+<h2>Filtering and Phase<a class="headerlink" href="#filtering-and-phase" title="Permalink to this headline">#</a></h2>
 <p>Filtering is used to emphasize or demphasize activity in particular frequencies in time-series. Common applications of filters to neural electrophysiological data are to remove 60Hz line noise, remove low frequency activity for spike detection / remove high frequency activity for LFP analyses, and to isolate specific oscillations.</p>
 <p>There are many commonly used filter designs, with customizable parameters. The goal of each filter is to maximize the attennuation of unwanted frequencies, which can be best achieved using filters with a narrow transition band in frequency space. However, these “sharp” filters produce stronger signal distortions and ringing artifacts. Therefore, choices in filter design often come down to this trade-off <a class="reference external" href="#References">[1]</a>. Additionally, higher filter orders effectively decrease the time resolution while increasing the frequency resolution. Here, we’ll use a butterworth filter, which is maximally uniform in how it affects the magnitude of activity in the filtered frequency range. Additionally, we’ll use an order of 4. Feel free to try other filter designs (cheby2, bessel) or orders to see their affects.</p>
 <p>Filters are often applied through convolution over the signal. This can distort phase estimation, as convolving in a particular direction will result in a phase shift. To eliminate this shift, filters can be convolved once forwards and then backwards, which we will do with scipy’s <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.filtfilt.html">filtfilt</a> function.</p>
@@ -494,7 +476,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x160a9b403d0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1e064233400&gt;]
 </pre></div>
 </div>
 <img alt="_images/2_ST_LFP_Spike_LFP_Coupling_5_1.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_5_1.png" />
@@ -521,9 +503,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>Spike LFP-Coupling<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<section id="quantify-spike-lfp-coupling">
+<h2>Quantify Spike LFP-Coupling<a class="headerlink" href="#quantify-spike-lfp-coupling" title="Permalink to this headline">#</a></h2>
 <p>Now let’s try to see how the spike times of the neuron align to this beta oscillation. A good way to start is to create a histogram of these spike times by binning over their oscillation phase.</p>
 <p>First, let’s collect the phases when the neuron spiked.</p>
 <div class="cell docutils container">
@@ -553,8 +534,8 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.  5.  5.  6.  4.  5.  3.  1.  0.  0.  0.  0.  2.  4.  4.  5.  7. 10.
- 11.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0. 10.  6.  7.  7.  3.  3.  0.  0.  0.  0.  0.  0.  1.  2.  4.  7.  3.
+ 15.]
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;BarContainer object of 19 artists&gt;
@@ -585,7 +566,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean vector length: 0.514, p value: 0.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean vector length: 0.657, p value: 0.0
 </pre></div>
 </div>
 </div>
@@ -610,7 +591,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.6, 20, &#39;Z-score: 7.2055712363627435&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.6, 20, &#39;Z-score: 9.70983737877545&#39;)
 </pre></div>
 </div>
 <img alt="_images/2_ST_LFP_Spike_LFP_Coupling_15_1.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_15_1.png" />
@@ -639,7 +620,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PPC: 0.2534884372131184
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PPC: 0.4230545209504523
 </pre></div>
 </div>
 </div>
@@ -669,6 +650,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 </div>
 </div>
 <p>Clearly the PPC take significantly longer to compute. Though this time is still tolerable, or if you were to run ppc on many surrogate distributions (to capture the bias of the measure due to an incomplete phase distribution, for example), this time can add up. Therefore, when comparing with surrogate data, the mvl is more often used.</p>
+</section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
@@ -727,7 +709,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By The Jupyter Book Community<br/>
+    By Michael Mariscal<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

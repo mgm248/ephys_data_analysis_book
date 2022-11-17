@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Spike train analyses &#8212; My sample book</title>
+    <title>Spike Train Analyses &#8212; Analysis of Electrophysiological Data in Neuroscience</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -50,11 +50,9 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Spike synchrony" href="4_ST_Spike_Synchrony.html" />
+    <link rel="next" title="Spike Synchrony" href="4_ST_Spike_Synchrony.html" />
     <link rel="prev" title="Spike-LFP Coupling" href="2_ST_LFP_Spike_LFP_Coupling.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -96,10 +94,10 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="_static/logo.png" class="logo" alt="logo">
+      <img src="_static/cpl_logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">My sample book</h1>
+      <h1 class="site-logo" id="site-title">Analysis of Electrophysiological Data in Neuroscience</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -111,14 +109,14 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Welcome to your Jupyter Book
+                    Analysis of Electrophysiological Data in Neuroscience
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="0_LFP_Identifying_Oscillations.html">
-   Identifying oscillations
+   Identifying Oscillations
   </a>
  </li>
  <li class="toctree-l1">
@@ -133,12 +131,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Spike train analyses
+   Spike Train Analyses
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="4_ST_Spike_Synchrony.html">
-   Spike synchrony
+   Spike Synchrony
   </a>
  </li>
 </ul>
@@ -347,46 +345,41 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Spike train analyses
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#raster-plot">
+   Raster plot
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#raster-plot">
-     Raster plot
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#spike-rate-estimation-using-kernel-density-estimation">
-     Spike rate estimation using kernel density estimation
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#autocorrelation">
-   Autocorrelation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spike-rate-estimation-using-kernel-density-estimation">
+   Spike rate estimation using kernel density estimation
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rhythmicity">
+   Rhythmicity
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#power-metrics-of-spike-rate">
      Power metrics of spike rate
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#assessing-stimulus-encoding">
-   Assessing stimulus encoding
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stimulus-encoding">
+   Stimulus encoding
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#principle-component-analysis">
+     Principle Component Analysis
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#principle-component-analysis">
-   Principle Component Analysis
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -400,7 +393,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Spike train analyses</h1>
+                <h1>Spike Train Analyses</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -410,46 +403,41 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Spike train analyses
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#raster-plot">
+   Raster plot
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#raster-plot">
-     Raster plot
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#spike-rate-estimation-using-kernel-density-estimation">
-     Spike rate estimation using kernel density estimation
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#autocorrelation">
-   Autocorrelation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spike-rate-estimation-using-kernel-density-estimation">
+   Spike rate estimation using kernel density estimation
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rhythmicity">
+   Rhythmicity
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#power-metrics-of-spike-rate">
      Power metrics of spike rate
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#assessing-stimulus-encoding">
-   Assessing stimulus encoding
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stimulus-encoding">
+   Stimulus encoding
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#principle-component-analysis">
+     Principle Component Analysis
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#principle-component-analysis">
-   Principle Component Analysis
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -465,7 +453,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="spike-train-analyses">
-<h1>Spike train analyses<a class="headerlink" href="#spike-train-analyses" title="Permalink to this headline">#</a></h1>
+<h1>Spike Train Analyses<a class="headerlink" href="#spike-train-analyses" title="Permalink to this headline">#</a></h1>
 <p>This tutorial will introduce analyses of neural spiking data, including identifying rhythmic activity in a neuron, and examining stimulus encoding by neural spike counts. Specifically, we will perform:</p>
 <ol class="simple">
 <li><p>Raster plot</p></li>
@@ -578,9 +566,9 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="autocorrelation">
-<h1>Autocorrelation<a class="headerlink" href="#autocorrelation" title="Permalink to this headline">#</a></h1>
+<section id="rhythmicity">
+<h2>Rhythmicity<a class="headerlink" href="#rhythmicity" title="Permalink to this headline">#</a></h2>
+<p>Autocorrelation</p>
 <p>Performing an autocorrelation on this spiketrain will allow us to capture the rhythmicity. Generally, an autocorrelation of a spike train computes the difference between the spike time of each spike with all other spike times in the spike train. If the neuron fires rhythmically, this will be reflected in the autocorrelation as an increased number of spikes at multiples of some time difference relative to 0.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -648,7 +636,7 @@ title="Print to PDF"
 </div>
 <p>Here, we see peaks at -50 and 50 ms, and every multiple of that time lag, indicating rhythmic spiking every 50ms or 20Hz.</p>
 <section id="power-metrics-of-spike-rate">
-<h2>Power metrics of spike rate<a class="headerlink" href="#power-metrics-of-spike-rate" title="Permalink to this headline">#</a></h2>
+<h3>Power metrics of spike rate<a class="headerlink" href="#power-metrics-of-spike-rate" title="Permalink to this headline">#</a></h3>
 <p>Analyses applied to quantify LFP oscillatory power can also be applied to the spike rate of our spike train <a class="reference external" href="#References">[3]</a>. Here, the kernel size must be chosen carefully, as a kernel smoothing the spike train over a long period of time will smear high frequency rhythmic activity, while smoothing over short periods of time can lead to a noisy signal. Here, we’ll analyze the power spectrum and time frequency power of the spike rate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -716,8 +704,8 @@ title="Print to PDF"
 <p>The power spectrum displays a strong peak at 20Hz, and the time-frequency representation shows some periods where 20Hz power is high. Overall, these methods are usually more effective when applied to LFP data, as the binary nature of neural spiking activity often results in noisy data. Still, these analyses can be useful in the absence of lfp data, or to analyze oscillatory activity individually in neurons.</p>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="assessing-stimulus-encoding">
-<h1>Assessing stimulus encoding<a class="headerlink" href="#assessing-stimulus-encoding" title="Permalink to this headline">#</a></h1>
+<section id="stimulus-encoding">
+<h2>Stimulus encoding<a class="headerlink" href="#stimulus-encoding" title="Permalink to this headline">#</a></h2>
 <p>A common step in electrophsiological experiments is to assess whether neural spiking activity can reflect stimulus information. To do so, we can start by plotting how individual neurons respond to different stimuli.</p>
 <p>Let’s say we have a neuron responding to 4 stimuli, where the neuron’s response depends on the stimuli. Let’s make a raster plot, where different stimuli are plotted using different colors.</p>
 <div class="cell docutils container">
@@ -762,9 +750,8 @@ title="Print to PDF"
 </div>
 <p>The neuron’s response rate should reflect the stimuli.</p>
 <p>Now, what if we have 10 neurons, each with independent stimulus preferences. We’d like to be able to assess how these neurons could encode for stimuli as a population. However, we can’t effectively visualize the activity of 10 neurons over 10 trials and 4 stimuli. Instead, we can use principle component analysis (PCA) to reduce the activity of the population of neurons into 2 or 3 components.</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="principle-component-analysis">
-<h1>Principle Component Analysis<a class="headerlink" href="#principle-component-analysis" title="Permalink to this headline">#</a></h1>
+<section id="principle-component-analysis">
+<h3>Principle Component Analysis<a class="headerlink" href="#principle-component-analysis" title="Permalink to this headline">#</a></h3>
 <p>PCA reduces some features into a smaller number of components. In neuroscience, PCA is used to reduce the activity from some number of neurons into 2 or 3 components so that the data can be easily summarized and visualized. PCA works by iteratively finding the vector such that the projection of the data onto this vector best captures the variance in the data. The following vectors, or components, are then identified to capture the remaining variance in the data while being orthogonal to the previous components. Mathmatically, the fist step of PCA analysis is to compute the covariance matrix of the data. The components are then identified as the eigenvectors of the covariance matrix.</p>
 <p>In interpreting the results of a PCA analysis, there are a few important points to remember. First, principle components are linear combinations of the initial variables: the actual output of a PCA decomposition is this weighting matrix, which must be multiplied with the original data to transform the data into PCA-space. Additionally, components are linearly uncorrelated with each other. Finally, since PCA iteratively captures as much variance as possible with each component, each subsequent component will capture less variance than the previous component <a class="reference external" href="#References">[4]</a>.</p>
 <p>In sklearn’s PCA function, the input matrix needs to be formatted such that the first dimension corresponds to each sample, and the second corresponds to each feature (here, neuron). We want to input all of our trials, regardless of the stimulus, into sklearn (but be able to organize by stimulus later), so here we’ll stack trials from different stimuli along the first dimension, creating a matrix that is (n_stim x n_trials) by n_units.</p>
@@ -845,14 +832,16 @@ title="Print to PDF"
 </div>
 <p>The stimuli are clearly separated in PCA space.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Denker M, Yegenoglu A, Grün S (2018) Collaborative HPC-enabled workflows on the HBP Collaboratory using the Elephant framework. Neuroinformatics 2018, P19. doi:10.12751/incf.ni2018.0019</p></li>
 <li><p>Sanderson, A. C. (1980). Adaptive filtering of neuronal spike train data. IEEE Transactions on Bio-Medical Engineering, 27(5), 271–274. <a class="reference external" href="https://doi.org/10.1109/TBME.1980.326633">https://doi.org/10.1109/TBME.1980.326633</a></p></li>
 <li><p>Burton, S. D., &amp; Urban, N. N. (2021). Cell and circuit origins of fast network oscillations in the mammalian main olfactory bulb. ELife, 10. <a class="reference external" href="https://doi.org/10.7554/ELIFE.74213">https://doi.org/10.7554/ELIFE.74213</a></p></li>
 <li><p>Hastie, T. et. all. (2009). Springer Series in Statistics The Elements of Statistical Learning. In The Mathematical Intelligencer (Vol. 27, Issue 2). <a class="reference external" href="http://www.springerlink.com/index/D7X7KX6772HQ2135.pdf">http://www.springerlink.com/index/D7X7KX6772HQ2135.pdf</a></p></li>
 </ol>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -892,7 +881,7 @@ title="Print to PDF"
     <a class='right-next' id="next-link" href="4_ST_Spike_Synchrony.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Spike synchrony</p>
+        <p class="prev-next-title">Spike Synchrony</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -903,7 +892,7 @@ title="Print to PDF"
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By The Jupyter Book Community<br/>
+    By Michael Mariscal<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

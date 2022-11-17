@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Spike synchrony &#8212; My sample book</title>
+    <title>Spike Synchrony &#8212; Analysis of Electrophysiological Data in Neuroscience</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -95,10 +95,10 @@ const thebe_selector_output = ".output, .cell_output"
         
       
       
-      <img src="_static/logo.png" class="logo" alt="logo">
+      <img src="_static/cpl_logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">My sample book</h1>
+      <h1 class="site-logo" id="site-title">Analysis of Electrophysiological Data in Neuroscience</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -110,14 +110,14 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Welcome to your Jupyter Book
+                    Analysis of Electrophysiological Data in Neuroscience
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="0_LFP_Identifying_Oscillations.html">
-   Identifying oscillations
+   Identifying Oscillations
   </a>
  </li>
  <li class="toctree-l1">
@@ -137,7 +137,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Spike synchrony
+   Spike Synchrony
   </a>
  </li>
 </ul>
@@ -346,39 +346,32 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Spike synchrony
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cross-correlation">
+   Cross correlation
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cross-correlation">
-     Cross correlation
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#unitary-event-analysis">
-     Unitary event analysis
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#spike-triggered-population-rate">
-     Spike-triggered population rate
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#kernel-design">
-     Kernel design
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#convolution-of-a-cross-correlation">
-     Convolution of a cross correlation
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#unitary-event-analysis">
+   Unitary event analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spike-triggered-population-rate">
+   Spike-triggered population rate
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kernel-design">
+   Kernel design
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convolution-of-a-cross-correlation">
+   Convolution of a cross correlation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -392,7 +385,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Spike synchrony</h1>
+                <h1>Spike Synchrony</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -402,39 +395,32 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Spike synchrony
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cross-correlation">
+   Cross correlation
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cross-correlation">
-     Cross correlation
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#unitary-event-analysis">
-     Unitary event analysis
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#spike-triggered-population-rate">
-     Spike-triggered population rate
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#kernel-design">
-     Kernel design
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#convolution-of-a-cross-correlation">
-     Convolution of a cross correlation
-    </a>
-   </li>
-  </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#unitary-event-analysis">
+   Unitary event analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#spike-triggered-population-rate">
+   Spike-triggered population rate
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kernel-design">
+   Kernel design
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convolution-of-a-cross-correlation">
+   Convolution of a cross correlation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#references">
    References
   </a>
@@ -450,7 +436,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="spike-synchrony">
-<h1>Spike synchrony<a class="headerlink" href="#spike-synchrony" title="Permalink to this headline">#</a></h1>
+<h1>Spike Synchrony<a class="headerlink" href="#spike-synchrony" title="Permalink to this headline">#</a></h1>
 <p>Neural synchronization can facilitate information transfer and the binding of information. Many methods have been employed to quantify nerual synchrony, and no one technique has become widely viewed as the gold-standard. Here, I will illustrate several methods to quantify neural synchrony, specifically:</p>
 <ol class="simple">
 <li><p>Cross correlation</p></li>
@@ -898,7 +884,7 @@ Mean stPR: 16.170752011037074 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1883f6f2fa0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1d02aca3610&gt;
 </pre></div>
 </div>
 <img alt="_images/4_ST_Spike_Synchrony_35_1.png" src="_images/4_ST_Spike_Synchrony_35_1.png" />
@@ -911,9 +897,8 @@ Mean stPR: 16.170752011037074 Hz
 <h2>Convolution of a cross correlation<a class="headerlink" href="#convolution-of-a-cross-correlation" title="Permalink to this headline">#</a></h2>
 <p>Other studies have convolved the cross correlation histogram, rather than the spike trains themselves, to estimate synchrony. Specifically, after a cross correlelogram has been computed, slower covariations in firing rate are estimated by convolving the cross correlelogram with a gaussian kerenel. The significance of each bin can then be compared to the convolved correlelogram, asssuming a poisson distribution <a class="reference external" href="#References">[4]</a>. This method therefore allows for the estimation of significance without jittering. Additionally, this method can also be applied towards identifying peaks in the cross correlelogram at time lags other than 0, for example, to identify a monosynaptic connection between neurons from a peak at +3ms <a class="reference external" href="#References">[5]</a>. However, the time resolution of this method is limited, as a cross correlelogram must be computed with a sufficent time window to include a reasonable estimate of the distribution at various time lags. This method has not been used by our lab, but the Buzsaki lab has published <a class="reference external" href="#https://github.com/AntonioFR8/buzcodeAFR/blob/devAFR/analysis/monosynapticPairs/bz_GetMonoSynapticallyConnected.m">example code</a> on Github.</p>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Grün, S., Diesmann, M., Grammont, F., Riehle, A., &amp; Aertsen, A. (1999). Detecting unitary events without discretization of time. Journal of neuroscience methods, 94(1), 67-79</p></li>
 <li><p>Grün, S. (2009). Data-driven significance estimation for precise spike correlation. Journal of Neurophysiology, 101(3), 1126–1140. <a class="reference external" href="https://doi.org/10.1152/JN.00093.2008/ASSET/IMAGES/LARGE/Z9K0030993390009.JPEG">https://doi.org/10.1152/JN.00093.2008/ASSET/IMAGES/LARGE/Z9K0030993390009.JPEG</a></p></li>
@@ -921,6 +906,7 @@ Mean stPR: 16.170752011037074 Hz
 <li><p>Stark, E., &amp; Abeles, M. (2009). Unbiased estimation of precise temporal correlations between spike trains. Journal of Neuroscience Methods, 179(1), 90–100. <a class="reference external" href="https://doi.org/10.1016/J.JNEUMETH.2008.12.029">https://doi.org/10.1016/J.JNEUMETH.2008.12.029</a></p></li>
 <li><p>English, D. F., McKenzie, S., Evans, T., Kim, K., Yoon, E., &amp; Buzsáki, G. (2017). Pyramidal cell-interneuron circuit architecture and dynamics in hippocampal networks. Neuron, 96(2), 505. <a class="reference external" href="https://doi.org/10.1016/J.NEURON.2017.09.033">https://doi.org/10.1016/J.NEURON.2017.09.033</a></p></li>
 </ol>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -964,7 +950,7 @@ Mean stPR: 16.170752011037074 Hz
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By The Jupyter Book Community<br/>
+    By Michael Mariscal<br/>
   
       &copy; Copyright 2022.<br/>
 </p>
