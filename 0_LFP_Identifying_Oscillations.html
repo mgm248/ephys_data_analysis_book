@@ -1,0 +1,795 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Identifying oscillations &#8212; My sample book</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Coherence and Directionality" href="1_LFP_Coherence_Directionality.html" />
+    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">My sample book</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Identifying oscillations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="1_LFP_Coherence_Directionality.html">
+   Coherence and Directionality
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2_ST_LFP_Spike_LFP_Coupling.html">
+   Spike-LFP Coupling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3_ST_SpikeTrain_Analyses.html">
+   Spike train analyses
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4_ST_Spike_Synchrony.html">
+   Spike synchrony
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/0_LFP_Identifying_Oscillations.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F0_LFP_Identifying_Oscillations.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/0_LFP_Identifying_Oscillations.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Identifying oscillations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#power-spectrum">
+     Power Spectrum
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-frequency-power">
+   Time Frequency Power
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#references">
+     References
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Identifying oscillations</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Identifying oscillations
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#power-spectrum">
+     Power Spectrum
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-frequency-power">
+   Time Frequency Power
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#references">
+     References
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="identifying-oscillations">
+<h1>Identifying oscillations<a class="headerlink" href="#identifying-oscillations" title="Permalink to this headline">#</a></h1>
+<p>This notebook will show how to quantify neural oscillations. Here, from some example data, we will calculate and plot:</p>
+<ol class="simple">
+<li><p>Power spectrum</p></li>
+<li><p>Windowed (classic) spectrogram</p></li>
+<li><p>Wavelet based spectrogram</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">welch</span><span class="p">,</span> <span class="n">spectrogram</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Load in the LFP, stimulation time data</span>
+<span class="n">fpath</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Michael\Documents\ephys_analysis_tutorials</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">lfp_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fpath</span><span class="o">+</span><span class="s1">&#39;example_lfp_160819_bank2.npy&#39;</span><span class="p">)</span>
+<span class="n">stim_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fpath</span><span class="o">+</span><span class="s1">&#39;example_stim_times_160819_bank2.npy&#39;</span><span class="p">)</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, we have lfp data (already filtered + resampled to 1000Hz) from an electrode in the olfactory bulb, recording while odors are presented. The array stim_times indicates when odors are experienced (the first inhalation after each odor presentation), for 6 different odors, formatted as odors x events.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Plot the lfp data in response to stimulation</span>
+<span class="n">evt</span> <span class="o">=</span> <span class="n">stim_times</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span> <span class="c1">#look at the first presentation of the first odor</span>
+<span class="n">time_segment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="o">+</span><span class="mi">1000</span><span class="p">)]</span> <span class="c1">#start and end event times of interest, converted to ms</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">,</span> <span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time post odor onset (ms)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Voltage&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Voltage&#39;)
+</pre></div>
+</div>
+<img alt="_images/0_LFP_Identifying_Oscillations_4_1.png" src="_images/0_LFP_Identifying_Oscillations_4_1.png" />
+</div>
+</div>
+<p>We see a big deflection around 200ms, and an oscillation until a little after 600ms. Next, we’ll want to quantify the presence of this oscillation. A common first step here is to plot the power spectrum of the data.</p>
+<section id="power-spectrum">
+<h2>Power Spectrum<a class="headerlink" href="#power-spectrum" title="Permalink to this headline">#</a></h2>
+<p>Using a Fourier transformation, any signal can be decomposed into some combination of sinusoidal oscillations. The power spectrum of a signal describes the distribution of frequency components that compose that signal. It is often used to quantify the presence of different oscillations, as a power spectrum quantifies the amplitude across frequencies.</p>
+<p>More specifically, to compute a power spectrum, the autocorrelation of a signal is computed, and then the Fourier Transform of the result is taken. Though this can be computed once, across the entire signal, in practice this results in a noisy estimate of the power spectrum. Here, we’ll use Welch’s method <a class="reference external" href="#References">[1]</a> to compute power, where the signal is segmented into a series of overlapping windows, and the power spectrum of each segment are averaged. The window size and overlap are determined by the <em>nperseg</em> and <em>noverlap</em> parameters in scipy’s welch function. Feel free to mess around with these to get an idea of the tradeoffs between large and small windows, and the degree of overlap.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">Pxx</span> <span class="o">=</span> <span class="n">welch</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">noverlap</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span> <span class="c1">#select only frequencies below 100Hz</span>
+<span class="n">Pxx</span> <span class="o">=</span> <span class="n">Pxx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Pxx</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Power Spectral Density&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Power Spectral Density&#39;)
+</pre></div>
+</div>
+<img alt="_images/0_LFP_Identifying_Oscillations_7_1.png" src="_images/0_LFP_Identifying_Oscillations_7_1.png" />
+</div>
+</div>
+<p>The power spectrum is much higher at lower frequencies (&lt;20Hz). This is characteristic of neural LFP data, referred to as 1/f or pink noise, where power systematically decreases with frequency. Still, we can see three peaks in power that go beyond this trend: one around 5Hz, one just below 20Hz, and another small peak around 70Hz. To better visualize this, we should remove the 1/f noise in the data. Though an <a class="reference external" href="https://fooof-tools.github.io/fooof/index.html">excellent tool</a> has been developed for this purpose, we can also remove this noise by normalizing to a baseline period, before odor presentation, where this noise will still be present. This will also help us identify which oscillations are specifically induced by the odor.</p>
+<p>To do so, we’ll take the power spectrum for 1 second of data before the odor was presented, and divide the odor-evoked psd by this baseline psd. <strong>Note</strong>: Make sure your parameters match the ones you used to compute the first power spectrum, or else the frequency resolution won’t match and you won’t be able to normalize.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Pxx_evoked</span> <span class="o">=</span> <span class="n">Pxx</span>
+<span class="n">time_segment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)]</span> <span class="c1">#start and end event times of interest, converted to ms</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">Pxx_baseline</span> <span class="o">=</span> <span class="n">welch</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">noverlap</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span> <span class="c1">#select only frequencies below 100Hz</span>
+<span class="n">Pxx_baseline</span> <span class="o">=</span> <span class="n">Pxx_baseline</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span>
+<span class="n">Pxx_normalized</span> <span class="o">=</span> <span class="n">Pxx_evoked</span> <span class="o">/</span> <span class="n">Pxx_baseline</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Pxx_normalized</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Power Spectral Density&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Power Spectral Density&#39;)
+</pre></div>
+</div>
+<img alt="_images/0_LFP_Identifying_Oscillations_9_1.png" src="_images/0_LFP_Identifying_Oscillations_9_1.png" />
+</div>
+</div>
+<p>That helps a little bit: we now clearly see the peak in beta (~20Hz). There’s also a big increase in power at the lowest frequencies.</p>
+<p>A power spectra is a useful first step for examining the oscillatory content of a time-series. However, we are still missing
+some information. For example, here, the gamma (~70Hz) oscillation is pretty muted. One reason for this is the gamma oscillation is brief, and here we’re looking at power over the entire second, making it hard to distinguish between a brief oscillation from a weak one. To better analyze this, let’s look at how power changes over time.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="time-frequency-power">
+<h1>Time Frequency Power<a class="headerlink" href="#time-frequency-power" title="Permalink to this headline">#</a></h1>
+<p>Time frequency analyses, as the name indicates, introduce a time dimension to our power analyses. This allows us to analyze when exactly oscillations are present. Now, our outputs are matrices called spectrograms, plotted as heatmaps, of power over both frequency and time.</p>
+<p><strong>Window analysis</strong></p>
+<p>A simple and common time frequency analysis is to compute a spectrogram as a series of power spectra. Here, the data is broken up into a set of overlapping windows, and the power spectrum is computed on each of these windows. We can use scipy’s spectrogram function here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">relative_times</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span><span class="mi">1500</span><span class="p">]</span>
+<span class="n">time_segment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">+</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="o">+</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="c1">#start and end event times of interest, converted to ms</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Sxx</span> <span class="o">=</span> <span class="n">spectrogram</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span> <span class="c1">#select only frequencies below 100Hz</span>
+<span class="n">Sxx</span> <span class="o">=</span> <span class="n">Sxx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">],:]</span> <span class="c1">#select only frequencies below 100Hz</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Sxx</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">relative_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">aspect</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (ms)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Frequency (Hz)&#39;)
+</pre></div>
+</div>
+<img alt="_images/0_LFP_Identifying_Oscillations_12_1.png" src="_images/0_LFP_Identifying_Oscillations_12_1.png" />
+</div>
+</div>
+<p>Let’s normalize this too. Now that we have data on how our power changes over time, we get multiple samples of power data for each frequency, and we can z-score the evoked power to this distribution at baseline.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Sxx_evoked</span> <span class="o">=</span> <span class="n">Sxx</span>
+<span class="n">time_segment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)]</span> <span class="c1">#start and end event times of interest, converted to ms</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Sxx_baseline</span> <span class="o">=</span> <span class="n">spectrogram</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span> <span class="c1">#select only frequencies below 100Hz</span>
+<span class="n">Sxx_baseline</span> <span class="o">=</span> <span class="n">Sxx_baseline</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">],:]</span> <span class="c1">#select only frequencies below 100Hz</span>
+
+<span class="n">Sxx_normalized</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">Sxx_evoked</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">f_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Sxx_evoked</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">Sxx_normalized</span><span class="p">[</span><span class="n">f_i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Sxx_evoked</span><span class="p">[</span><span class="n">f_i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Sxx_baseline</span><span class="p">[</span><span class="n">f_i</span><span class="p">,</span> <span class="p">:]))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">Sxx_baseline</span><span class="p">[</span><span class="n">f_i</span><span class="p">,</span> <span class="p">:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Sxx_normalized</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">relative_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">aspect</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (ms)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Frequency (Hz)&#39;)
+</pre></div>
+</div>
+<img alt="_images/0_LFP_Identifying_Oscillations_14_1.png" src="_images/0_LFP_Identifying_Oscillations_14_1.png" />
+</div>
+</div>
+<p>The output here is clearly very blocky, due to the windowing procedure. There’s also a tradeoff between time resolution and frequency resolution we can explore. Here, the bigger the time window used, the finer the frequency resolution of each power spectrum, and therefore the spectrogram as a whole. However, bigger time windows decrease time resolution as well, so we can optimize the time resolution by choosing to use smaller time windows. In scipy’s spectrogram function, the length of the time segments are set by the nperseg argument, indicating the number of samples per segment. Let’s try optimizing for time or frequency resolution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">time_segment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">+</span><span class="mi">1500</span><span class="p">]</span> <span class="c1">#start and end event times of interest, converted to ms</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Sxx</span> <span class="o">=</span> <span class="n">spectrogram</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span> <span class="c1">#select only frequencies below 100Hz</span>
+<span class="n">Sxx</span> <span class="o">=</span> <span class="n">Sxx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">],:]</span> <span class="c1">#select only frequencies below 100Hz</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Sxx</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">relative_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">aspect</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (ms)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Increased time resolution&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Sxx</span> <span class="o">=</span> <span class="n">spectrogram</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span> <span class="c1">#select only frequencies below 100Hz</span>
+<span class="n">Sxx</span> <span class="o">=</span> <span class="n">Sxx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">],:]</span> <span class="c1">#select only frequencies below 100Hz</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Sxx</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">relative_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">aspect</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (ms)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Increased frequency resolution&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Increased frequency resolution&#39;)
+</pre></div>
+</div>
+<img alt="_images/0_LFP_Identifying_Oscillations_16_1.png" src="_images/0_LFP_Identifying_Oscillations_16_1.png" />
+</div>
+</div>
+<p>Increasing the frequency resolution, we can see power is increasing in two distinct lower frequency bands, one around 4Hz and another around 20Hz.</p>
+<p>Overall, a window-based spectrogram is a straightforward way to extract oscillatory power over both time and frequency. However, the outputs here are very limited in both time and frequency resolution. When analyzing oscillations over long (&gt;10s) timescales, this is not a problem, and the results will look much better than these. However, we want to analyze oscillation power over a small time window (~1s), and so currently our time and frequency resolution is poor. To better analyze oscillation power in the time and frequency domains for this short time period, a morlet wavelet based analysis is more effective.</p>
+<p><strong>Morlet wavelets</strong></p>
+<p>An alternative to a windowed fourier analysis is convolution with morlet (or Gabort) wavelets. These wavelets are themselves sinewaves weighted by a gaussian. This weighting provides temporal specificity, and convolving these wavelets with the signal allows for the measurement of power over time. To analyze power from different frequencies, wavelets are created from sinewaves of different frequencies. Spectrograms produced from morelet wavelet analysis are not “blocky” like the fourier analysis, as the gaussian weighting of the wavelets results in a gaussian spread of power over both time and frequency.</p>
+<p>Fewer packages support morlet wavelet convolution. <a class="reference external" href="https://mne.tools/stable/index.html">MNE</a> is an has a <a class="reference external" href="https://mne.tools/stable/generated/mne.time_frequency.tfr_morlet.html">great function for this</a> we’ll use here. The package is a great resource for analyzing LFP data in python, though it is designed for EEG+MEG data.</p>
+<p>First, let’s set up or data for mne. We need to create an info structure, and format the data into an epochs array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mne</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">info</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">create_info</span><span class="p">(</span><span class="n">ch_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))),</span> <span class="n">sfreq</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ch_types</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;eeg&#39;</span><span class="p">])</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">1</span><span class="p">))))</span>
+<span class="n">epoch</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="c1">#Format data into [epochs, channels, samples] format</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">EpochsArray</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>When we run the morlet time-frequency analysis, we’ll need to set a the parameter n_cycles. Like fourier window analyses, morelet wavelet analyses have inputs that result in a trade-off between time and frequency resolution, namely, the length of the wavelet. Longer wavelets are less precise in time, but more precise in frequency. In MNE, the length of the wavelet is determined by the n_cycles parameter, which indicates the number of cycles in the wavelets (with frequency held constant, such that more cycles results in a longer wavelet). This can be set globally for all wavelets, resulting in the same frequency specificity across wavelets of different frequencies. Let’s try this first.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">tf_pow</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">time_frequency</span><span class="o">.</span><span class="n">tfr_morlet</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">freqs</span><span class="o">=</span><span class="n">freqs</span><span class="p">,</span> <span class="n">n_cycles</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_itc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">tf_pow</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">tf_pow</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tf_pow</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">relative_times</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tf_pow</span><span class="o">.</span><span class="n">freqs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tf_pow</span><span class="o">.</span><span class="n">freqs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+           <span class="n">aspect</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (ms)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Frequency (Hz)&#39;)
+</pre></div>
+</div>
+<img alt="_images/0_LFP_Identifying_Oscillations_22_1.png" src="_images/0_LFP_Identifying_Oscillations_22_1.png" />
+</div>
+</div>
+<p>Again, we can normalize by a baseline period. MNE has an apply_baseline function on time_frequency objects we can use to here, we just need to compute the spectrogram over both the baseline and evoked periods to give the function all the data it needs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">relative_times</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span><span class="mi">1500</span><span class="p">]</span>
+<span class="n">time_segment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">+</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">+</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="c1">#start and end event times of interest, converted to ms</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">1</span><span class="p">))))</span>
+<span class="n">epoch</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="c1">#Format data into [epochs, channels, samples] format</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">EpochsArray</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">tf_pow</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">time_frequency</span><span class="o">.</span><span class="n">tfr_morlet</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">freqs</span><span class="o">=</span><span class="n">freqs</span><span class="p">,</span> <span class="n">n_cycles</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_itc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">tf_pow</span><span class="o">.</span><span class="n">apply_baseline</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;zscore&#39;</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="p">(</span><span class="mf">.2</span><span class="p">,</span> <span class="mf">1.800</span><span class="p">))</span> <span class="c1">#add a little padding for the baseline</span>
+<span class="n">tf_pow</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">tf_pow</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tf_pow</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">relative_times</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tf_pow</span><span class="o">.</span><span class="n">freqs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tf_pow</span><span class="o">.</span><span class="n">freqs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+           <span class="n">aspect</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Applying baseline correction (mode: zscore)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 1000.0)
+</pre></div>
+</div>
+<img alt="_images/0_LFP_Identifying_Oscillations_24_2.png" src="_images/0_LFP_Identifying_Oscillations_24_2.png" />
+</div>
+</div>
+<p>This looks better, but this spectrogram still appears smeared over time at low frequencies while varying sharply at high frequencies. This is because when we set n_cycles globally, the time specificity of each wavelet will vary, as one cycle of a 2Hz oscillation takes much more time than one cycle of a 20Hz oscillation. Therefore, weighting the number of cycles of wavelets by their frequencies is often preferable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">relative_times</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2000</span><span class="p">,</span><span class="mi">1500</span><span class="p">]</span>
+<span class="n">time_segment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">+</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">+</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="c1">#start and end event times of interest, converted to ms</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">1</span><span class="p">))))</span>
+<span class="n">epoch</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="c1">#Format data into [epochs, channels, samples] format</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">EpochsArray</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">n_cycles</span> <span class="o">=</span> <span class="n">freqs</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">tf_pow</span> <span class="o">=</span> <span class="n">mne</span><span class="o">.</span><span class="n">time_frequency</span><span class="o">.</span><span class="n">tfr_morlet</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">freqs</span><span class="o">=</span><span class="n">freqs</span><span class="p">,</span> <span class="n">n_cycles</span><span class="o">=</span><span class="n">n_cycles</span><span class="p">,</span> <span class="n">return_itc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">tf_pow</span><span class="o">.</span><span class="n">apply_baseline</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;zscore&#39;</span><span class="p">,</span> <span class="n">baseline</span><span class="o">=</span><span class="p">(</span><span class="mf">.2</span><span class="p">,</span> <span class="mf">1.800</span><span class="p">))</span> <span class="c1">#add a little padding for the baseline</span>
+<span class="n">tf_pow</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">tf_pow</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tf_pow</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">relative_times</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tf_pow</span><span class="o">.</span><span class="n">freqs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tf_pow</span><span class="o">.</span><span class="n">freqs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+           <span class="n">aspect</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time (ms)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Applying baseline correction (mode: zscore)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Frequency (Hz)&#39;)
+</pre></div>
+</div>
+<img alt="_images/0_LFP_Identifying_Oscillations_26_2.png" src="_images/0_LFP_Identifying_Oscillations_26_2.png" />
+</div>
+</div>
+<p>Now, we can see a clear oscillation at 20Hz, and a weak oscillation around 70Hz, around 400ms post odor presentation.</p>
+<p>Each of these analyses measures the power of sinusoidal oscillations. However, neural oscillations are often non-sinusoidal, and this can lead to some erroneous outputs. For example, a non-sinusoidal oscillation will often lead to spurious peaks in power at harmonic frequencies of the actual oscillation frequency. This occurs when the fourier analysis decomposes the non-sinusoidal oscillation into a sinusoidal oscillation at its true frequency, and resulting in leftover signal that can be composed from harmonics of that frequency <a class="reference external" href="#References">[2]</a></p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>P. Welch, “The use of the fast Fourier transform for the estimation of power spectra: A method based on time averaging over short, modified periodograms”, IEEE Trans. Audio Electroacoust. vol. 15, pp. 70-73, 1967.</p></li>
+<li><p>Donoghue, T., Schaworonkow, N., &amp; Voytek, | Bradley. (2021). Methodological considerations for studying neural oscillations. <a class="reference external" href="https://doi.org/10.1111/ejn.15361">https://doi.org/10.1111/ejn.15361</a></p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Welcome to your Jupyter Book</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="1_LFP_Coherence_Directionality.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Coherence and Directionality</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By The Jupyter Book Community<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

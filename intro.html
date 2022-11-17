@@ -50,9 +50,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Markdown Files" href="markdown.html" />
+    <link rel="next" title="Identifying oscillations" href="0_LFP_Identifying_Oscillations.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -114,18 +116,28 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="markdown.html">
-   Markdown Files
+  <a class="reference internal" href="0_LFP_Identifying_Oscillations.html">
+   Identifying oscillations
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="notebooks.html">
-   Content with notebooks
+  <a class="reference internal" href="1_LFP_Coherence_Directionality.html">
+   Coherence and Directionality
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="markdown-notebooks.html">
-   Notebooks with MyST Markdown
+  <a class="reference internal" href="2_ST_LFP_Spike_LFP_Coupling.html">
+   Spike-LFP Coupling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3_ST_SpikeTrain_Analyses.html">
+   Spike train analyses
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4_ST_Spike_Synchrony.html">
+   Spike synchrony
   </a>
  </li>
 </ul>
@@ -316,9 +328,18 @@ It does not go in-depth into any particular topic - check out <a class="referenc
 <p>Check out the content pages bundled with this sample book to see more.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html">Identifying oscillations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html#time-frequency-power">Time Frequency Power</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1_LFP_Coherence_Directionality.html">Coherence and Directionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_ST_LFP_Spike_LFP_Coupling.html">Spike-LFP Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_ST_LFP_Spike_LFP_Coupling.html#id1">Spike LFP-Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html">Spike train analyses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#autocorrelation">Autocorrelation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#assessing-stimulus-encoding">Assessing stimulus encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#principle-component-analysis">Principle Component Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#references">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_ST_Spike_Synchrony.html">Spike synchrony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_ST_Spike_Synchrony.html#references">References</a></li>
 </ul>
 </div>
 </section>
@@ -350,10 +371,10 @@ It does not go in-depth into any particular topic - check out <a class="referenc
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="markdown.html" title="next page">
+    <a class='right-next' id="next-link" href="0_LFP_Identifying_Oscillations.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Markdown Files</p>
+        <p class="prev-next-title">Identifying oscillations</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
