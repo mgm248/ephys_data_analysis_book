@@ -1,6 +1,6 @@
 # Electrophysiological Data Analysis Tutorials
 
-See the [web version](#https://mgm248.github.io/ephys_data_analysis_book/intro.html) of this book.
+See the [web_version](#https://mgm248.github.io/ephys_data_analysis_book/intro.html) of this book.
 
 Tutorial notebooks on analyzing electrophysiological recordings of the brain, including:
 
