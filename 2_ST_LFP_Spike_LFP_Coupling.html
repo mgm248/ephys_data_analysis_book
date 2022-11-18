@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Spike train analyses" href="3_ST_SpikeTrain_Analyses.html" />
+    <link rel="next" title="Spike Train Analyses" href="3_ST_SpikeTrain_Analyses.html" />
     <link rel="prev" title="Coherence and Directionality" href="1_LFP_Coherence_Directionality.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -133,7 +133,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3_ST_SpikeTrain_Analyses.html">
-   Spike train analyses
+   Spike Train Analyses
   </a>
  </li>
  <li class="toctree-l1">
@@ -408,7 +408,7 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="spike-lfp-coupling">
 <h1>Spike-LFP Coupling<a class="headerlink" href="#spike-lfp-coupling" title="Permalink to this headline">#</a></h1>
-<p>Neural oscillations affect the spike timing of neurons. Identifying how neurons fire in relation to oscillations can help uncover which neurons participate in an oscillation, and and to what degree. This notebook will demonstrate how to quantify how the spike timing of neurons relates to underlying oscillations. Specifically, this notebook shows how to:</p>
+<p>Neural oscillations reflect the spike timing of neurons. Identifying how neurons fire in relation to oscillations can help uncover which neurons participate in an oscillation, and and to what degree. This notebook will demonstrate how to quantify how the spike timing of neurons relates to underlying oscillations. Specifically, this notebook shows how to:</p>
 <ol class="simple">
 <li><p>Filter data into a frequency band</p></li>
 <li><p>Extract phase information</p></li>
@@ -476,7 +476,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1e064233400&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x160e67a7b50&gt;]
 </pre></div>
 </div>
 <img alt="_images/2_ST_LFP_Spike_LFP_Coupling_5_1.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_5_1.png" />
@@ -534,8 +534,8 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0. 10.  6.  7.  7.  3.  3.  0.  0.  0.  0.  0.  0.  1.  2.  4.  7.  3.
- 15.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.  5.  7.  6.  5.  4.  2.  1.  0.  0.  0.  0.  0.  0.  5.  7. 10.  7.
+  6.]
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;BarContainer object of 19 artists&gt;
@@ -566,7 +566,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean vector length: 0.657, p value: 0.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean vector length: 0.548, p value: 0.0
 </pre></div>
 </div>
 </div>
@@ -591,7 +591,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.6, 20, &#39;Z-score: 9.70983737877545&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.6, 20, &#39;Z-score: 7.398590662739315&#39;)
 </pre></div>
 </div>
 <img alt="_images/2_ST_LFP_Spike_LFP_Coupling_15_1.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_15_1.png" />
@@ -620,7 +620,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PPC: 0.4230545209504523
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PPC: 0.28989451566651975
 </pre></div>
 </div>
 </div>
@@ -644,7 +644,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Vector Length process time: 0.0
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pairwise Phase Consistency process time: 1.453125
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pairwise Phase Consistency process time: 1.625
 </pre></div>
 </div>
 </div>
@@ -698,7 +698,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
     <a class='right-next' id="next-link" href="3_ST_SpikeTrain_Analyses.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Spike train analyses</p>
+        <p class="prev-next-title">Spike Train Analyses</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

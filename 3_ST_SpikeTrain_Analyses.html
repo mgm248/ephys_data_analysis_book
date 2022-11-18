@@ -50,6 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Spike Synchrony" href="4_ST_Spike_Synchrony.html" />
@@ -454,10 +456,10 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="spike-train-analyses">
 <h1>Spike Train Analyses<a class="headerlink" href="#spike-train-analyses" title="Permalink to this headline">#</a></h1>
-<p>This tutorial will introduce analyses of neural spiking data, including identifying rhythmic activity in a neuron, and examining stimulus encoding by neural spike counts. Specifically, we will perform:</p>
+<p>Analyses of neural spiking activity are central to invasive electrophysiological data analyses. Spikes are extracted and attributed to different neurons from recordings using algorithms like <a class="reference external" href="https://spyking-circus.readthedocs.io/en/latest/">spyking-circus</a>, such that neuroscientists can analyze a series of spike times from each recorded neuron. Most analyses of spiking data focus on how stimuli affect spike rates. Ultimately, neuroscientists often investigate how well this information can reflect the stimuli. Additionally, though neural oscillations are most commonly assessed using the LFP data, the oscillatory activity of individual neurons can be measured. This tutorial will cover these analyses; specifically:</p>
 <ol class="simple">
 <li><p>Raster plot</p></li>
-<li><p>Spike rate estimation using kernals</p></li>
+<li><p>Spike rate estimation using kernels</p></li>
 <li><p>Autocorrelation</p></li>
 <li><p>Power analyses of spike rate data (PSD, time-frequency power)</p></li>
 <li><p>PCA visualization</p></li>
