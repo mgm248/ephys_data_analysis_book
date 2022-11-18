@@ -462,7 +462,7 @@ title="Print to PDF"
 <section id="filtering-and-phase">
 <h2>Filtering and Phase<a class="headerlink" href="#filtering-and-phase" title="Permalink to this headline">#</a></h2>
 <p>Filtering is used to emphasize or demphasize activity in particular frequencies in time-series. Common applications of filters to neural electrophysiological data are to remove 60Hz line noise, remove low frequency activity for spike detection / remove high frequency activity for LFP analyses, and to isolate specific oscillations.</p>
-<p>There are many commonly used filter designs, with customizable parameters. The goal of each filter is to maximize the attennuation of unwanted frequencies, which can be best achieved using filters with a narrow transition band in frequency space. However, these “sharp” filters produce stronger signal distortions and ringing artifacts. Therefore, choices in filter design often come down to this trade-off <a class="reference external" href="#References">[1]</a>. Additionally, higher filter orders effectively decrease the time resolution while increasing the frequency resolution. Here, we’ll use a butterworth filter, which is maximally uniform in how it affects the magnitude of activity in the filtered frequency range. Additionally, we’ll use an order of 4. Feel free to try other filter designs (cheby2, bessel) or orders to see their affects.</p>
+<p>There are many commonly used filter designs, with customizable parameters. The goal of each filter is to maximize the attennuation of unwanted frequencies, which can be best achieved using filters with a narrow transition band in frequency space. However, these “sharp” filters produce stronger signal distortions and ringing artifacts. Therefore, choices in filter design often come down to this trade-off <a class="reference external" href="#references">[1]</a>. Additionally, higher filter orders effectively decrease the time resolution while increasing the frequency resolution. Here, we’ll use a butterworth filter, which is maximally uniform in how it affects the magnitude of activity in the filtered frequency range. Additionally, we’ll use an order of 4. Feel free to try other filter designs (cheby2, bessel) or orders to see their affects.</p>
 <p>Filters are often applied through convolution over the signal. This can distort phase estimation, as convolving in a particular direction will result in a phase shift. To eliminate this shift, filters can be convolved once forwards and then backwards, which we will do with scipy’s <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.filtfilt.html">filtfilt</a> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -476,7 +476,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x160e67a7b50&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x219b10f7430&gt;]
 </pre></div>
 </div>
 <img alt="_images/2_ST_LFP_Spike_LFP_Coupling_5_1.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_5_1.png" />
@@ -534,8 +534,8 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.  5.  7.  6.  5.  4.  2.  1.  0.  0.  0.  0.  0.  0.  5.  7. 10.  7.
-  6.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.  6.  8.  3.  3.  8.  0.  1.  0.  0.  0.  0.  1.  0.  3.  5.  5.  5.
+ 10.]
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;BarContainer object of 19 artists&gt;
@@ -546,7 +546,7 @@ title="Print to PDF"
 </div>
 <p>We can now see spikes are more likely to fire around 180 degrees phase, or the trough, of the oscillation. Let’s try to quantify the extent of this spike-phase coupling. To do so, I’ll use mean vector length, and pairwise phase coherence.</p>
 <p><strong>Mean Vector length</strong></p>
-<p>A common way to measure spike phase locking is to take the length of the mean vector of the spike-phase distribution <a class="reference external" href="#References">[2]</a>. If spikes are uniformally distributed with respect to phase, the mean of this distribution will be a point close to the center of the circle, and its radius will be close to 0. On the other hand, if spikes are clustered around some particular phase, the mean vector will point towards that phase and thus will have a radius closer to 1.</p>
+<p>A common way to measure spike phase locking is to take the length of the mean vector of the spike-phase distribution <a class="reference external" href="#references">[2]</a>. If spikes are uniformally distributed with respect to phase, the mean of this distribution will be a point close to the center of the circle, and its radius will be close to 0. On the other hand, if spikes are clustered around some particular phase, the mean vector will point towards that phase and thus will have a radius closer to 1.</p>
 <p>To calculate the mean vector length (mvl) of our distribution, we first need to map the spike phase distribution into polar coordinates and then take their mean. The mvl is then the distance of this point from (0,0).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -566,13 +566,13 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean vector length: 0.548, p value: 0.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean vector length: 0.592, p value: 0.0
 </pre></div>
 </div>
 </div>
 </div>
 <p>We get a p value of 0, indicating phase locking is highly significant.
-However, this measure is highly dependent on the number of spikes in our sample <a class="reference external" href="#References">[3]</a>, as small samples will lead to a mean centered away from (0,0) even if spike phases are uniformally distributed.</p>
+However, this measure is highly dependent on the number of spikes in our sample <a class="reference external" href="#references">[3]</a>, as small samples will lead to a mean centered away from (0,0) even if spike phases are uniformally distributed.</p>
 <p>One way to get around this is to repeatedly estimate the mvl on a surrogate spike phase distribution with the same number of samples as our actual sample, and estimate the difference between our real result and these surrogate estimates.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -591,7 +591,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.6, 20, &#39;Z-score: 7.398590662739315&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.6, 20, &#39;Z-score: 7.69154573726944&#39;)
 </pre></div>
 </div>
 <img alt="_images/2_ST_LFP_Spike_LFP_Coupling_15_1.png" src="_images/2_ST_LFP_Spike_LFP_Coupling_15_1.png" />
@@ -600,7 +600,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 <p>The real mvl is clearly significantly higher than these surrogates, indicating spike-phase coupling is significant.</p>
 <p><em>Note</em>: We could have randomly sampled from any number between -np.pi and np.pi, but instead I sampled from the actual observed phase values. This controls for a potential bias of spike-phase locking estimation, where not all phase values are observed in the oscillation itself. This occurs in smaller samples, where the length of the sample is less than a full cycle. If not all phases are observed, than the spike-phase distribution will be artificially non-uniform, and significant when compared to a surrogate distribution containing all possible phase values.</p>
 <p><strong>Pairwise Phase Consistency</strong></p>
-<p>Alternatively, another measure of spike-phase locking, pairwise phase consistency (ppc), is unbiased by the number of samples <a class="reference external" href="#References">[3]</a>. The measure computes the cosine of the angular distance between each pair of phases, resulting in an output of 1 for pairs of the same phase and -1 for antiphase pairs. After averaging across pairs, the measure will approach 0 for a uniform phase distribution and 1 for a perfectly aligned phase distribution.</p>
+<p>Alternatively, another measure of spike-phase locking, pairwise phase consistency (ppc), is unbiased by the number of samples <a class="reference external" href="#references">[3]</a>. The measure computes the cosine of the angular distance between each pair of phases, resulting in an output of 1 for pairs of the same phase and -1 for antiphase pairs. After averaging across pairs, the measure will approach 0 for a uniform phase distribution and 1 for a perfectly aligned phase distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">PPC</span><span class="p">(</span><span class="n">spike_phases</span><span class="p">):</span>
@@ -620,7 +620,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PPC: 0.28989451566651975
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PPC: 0.33952146217224755
 </pre></div>
 </div>
 </div>
@@ -644,7 +644,7 @@ However, this measure is highly dependent on the number of spikes in our sample 
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Vector Length process time: 0.0
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pairwise Phase Consistency process time: 1.625
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pairwise Phase Consistency process time: 1.453125
 </pre></div>
 </div>
 </div>
