@@ -50,8 +50,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Coherence and Directionality" href="1_LFP_Coherence_Directionality.html" />
@@ -133,7 +131,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3_ST_SpikeTrain_Analyses.html">
-   Spike train analyses
+   Spike Train Analyses
   </a>
  </li>
  <li class="toctree-l1">
@@ -446,7 +444,8 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="identifying-oscillations">
 <h1>Identifying Oscillations<a class="headerlink" href="#identifying-oscillations" title="Permalink to this headline">#</a></h1>
-<p>This notebook will show how to quantify neural oscillations. Here, from some example data, we will calculate and plot:</p>
+<p>Local field potential (LFP) and electroencephalogram (EEG) data both reflect the combined electrical potentials of a population of neurons. As a result, LFP and EEG data can capture neural oscillations, the rhythmic and synchronous firing of a neural population. These oscillations are observed throughout the brain, in many different frequencies, mostly ranging from 2-100Hz. Many different purposes have been attributed to neural oscillations, including synchronization of neurons for feature binding and information transfer, and clocking the relative spike timing of neurons.</p>
+<p>Considering their ubiquity and potential function, the ability to observe and characterize neural oscillations continues to be critical to progress in neuroscience. To this end, this notebook will demonstrate how to calculate and plot:</p>
 <ol class="simple">
 <li><p>Power spectrum</p></li>
 <li><p>Windowed (classic) spectrogram</p></li>
@@ -474,7 +473,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>Here, we have lfp data (already filtered + resampled to 1000Hz) from an electrode in the olfactory bulb, recording while odors are presented. The array stim_times indicates when odors are experienced (the first inhalation after each odor presentation), for 6 different odors, formatted as odors x events.</p>
+<p>Here, we have lfp data (already filtered + resampled to 1000Hz) from an electrode in the olfactory bulb, recording while odors are presented. The array stim_times indicates when odors are experienced (the first inhalation after each odor presentation), for 6 different odors, formatted as odors x events. We’ll start by plotting the lfp data around stimulus onset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Plot the lfp data in response to stimulation</span>
@@ -494,11 +493,12 @@ title="Print to PDF"
 <img alt="_images/0_LFP_Identifying_Oscillations_5_1.png" src="_images/0_LFP_Identifying_Oscillations_5_1.png" />
 </div>
 </div>
-<p>We see a big deflection around 200ms, and an oscillation until a little after 600ms. Next, we’ll want to quantify the presence of this oscillation. A common first step here is to plot the power spectrum of the data.</p>
+<p>After the stimulus is presented, we see a big deflection around 200ms, a higher frequency oscillation around 400ms, and a lower frequency oscillation most prominently around 600ms. Next, we’ll want to quantify the presence of this oscillation. A common first step here is to plot the power spectrum of the data.</p>
 <section id="power-spectrum">
 <h3>Power Spectrum<a class="headerlink" href="#power-spectrum" title="Permalink to this headline">#</a></h3>
-<p>Using a Fourier transformation, any signal can be decomposed into some combination of sinusoidal oscillations. The power spectrum of a signal describes the distribution of frequency components that compose that signal. It is often used to quantify the presence of different oscillations, as a power spectrum quantifies the amplitude across frequencies.</p>
-<p>More specifically, to compute a power spectrum, the autocorrelation of a signal is computed, and then the Fourier Transform of the result is taken. Though this can be computed once, across the entire signal, in practice this results in a noisy estimate of the power spectrum. Here, we’ll use Welch’s method <a class="reference external" href="#References">[1]</a> to compute power, where the signal is segmented into a series of overlapping windows, and the power spectrum of each segment are averaged. The window size and overlap are determined by the <em>nperseg</em> and <em>noverlap</em> parameters in scipy’s welch function. Feel free to mess around with these to get an idea of the tradeoffs between large and small windows, and the degree of overlap.</p>
+<p>The power spectrum of a signal describes the distribution of frequency components that compose that signal. It is often used to quantify the presence of different oscillations, as a power spectrum quantifies the amplitude across frequencies.</p>
+<p>Mathmatically, comptuing a power spectrum involves two steps. First, the autocorrelation of a signal, or the correlation of a signal with itself at various time delays, is computed. Then the fourier transform of the autocorrrelation is computed, decomposing the autocorrelation into some combination of sinusoidal oscillations. Though this process can be completed once across the entire signal, this results in a noisy estimate of the power spectrum. Instead, the signal is normally segmented into a series of overlapping windows, and the power spectrum of each segment are then averaged.</p>
+<p>In practice, this process is usually left to some pre-existing function. Here, we’ll use the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html">welch</a> function from scipy, which uses Welch’s method <a class="reference external" href="#references">[1]</a> to split the data into overlapping segments. Additionally, Welch’s method applies a window function to each segment,  to reduce the affect of edge artifacts. The segment size and overlap are determined by the <em>nperseg</em> and <em>noverlap</em> parameters in scipy’s welch function. Feel free to mess around with these to get an idea of the tradeoffs between large and small segments, and the degree of overlap.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">Pxx</span> <span class="o">=</span> <span class="n">welch</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">noverlap</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -552,7 +552,7 @@ some information. For example, here, the gamma (~70Hz) oscillation is pretty mut
 <p>Time frequency analyses, as the name indicates, introduce a time dimension to our power analyses. This allows us to analyze when exactly oscillations are present. Now, our outputs are matrices called spectrograms, plotted as heatmaps, of power over both frequency and time.</p>
 <section id="window-analysis">
 <h3>Window analysis<a class="headerlink" href="#window-analysis" title="Permalink to this headline">#</a></h3>
-<p>A simple and common time frequency analysis is to compute a spectrogram as a series of power spectra. Here, the data is broken up into a set of overlapping windows, and the power spectrum is computed on each of these windows. We can use scipy’s spectrogram function here.</p>
+<p>A simple and common time frequency analysis is to compute a spectrogram as a series of power spectra. Here, the data is broken up into a set of overlapping segments, and the power spectrum is computed on each of these windows. We can use scipy’s spectrogram function here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">relative_times</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span><span class="mi">1500</span><span class="p">]</span>
@@ -600,7 +600,7 @@ some information. For example, here, the gamma (~70Hz) oscillation is pretty mut
 <img alt="_images/0_LFP_Identifying_Oscillations_15_1.png" src="_images/0_LFP_Identifying_Oscillations_15_1.png" />
 </div>
 </div>
-<p>The output here is clearly very blocky, due to the windowing procedure. There’s also a tradeoff between time resolution and frequency resolution we can explore. Here, the bigger the time window used, the finer the frequency resolution of each power spectrum, and therefore the spectrogram as a whole. However, bigger time windows decrease time resolution as well, so we can optimize the time resolution by choosing to use smaller time windows. In scipy’s spectrogram function, the length of the time segments are set by the nperseg argument, indicating the number of samples per segment. Let’s try optimizing for time or frequency resolution.</p>
+<p>The output here is clearly very blocky, due to the windowing procedure. There’s also a tradeoff between time resolution and frequency resolution we can explore. Here, the bigger the time segment used, the finer the frequency resolution of each power spectrum, and therefore the spectrogram as a whole. However, bigger time segments decrease time resolution as well, so we can optimize the time resolution by choosing to use smaller time segments. In scipy’s spectrogram function, the length of the time segments are set by the nperseg argument, indicating the number of samples per segment. Let’s try optimizing for time or frequency resolution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -741,7 +741,7 @@ some information. For example, here, the gamma (~70Hz) oscillation is pretty mut
 </div>
 </div>
 <p>Now, we can see a clear oscillation at 20Hz, and a weak oscillation around 70Hz, around 400ms post odor presentation.</p>
-<p>Each of these analyses measures the power of sinusoidal oscillations. However, neural oscillations are often non-sinusoidal, and this can lead to some erroneous outputs. For example, a non-sinusoidal oscillation will often lead to spurious peaks in power at harmonic frequencies of the actual oscillation frequency. This occurs when the fourier analysis decomposes the non-sinusoidal oscillation into a sinusoidal oscillation at its true frequency, and resulting in leftover signal that can be composed from harmonics of that frequency <a class="reference external" href="#References">[2]</a></p>
+<p>Each of these analyses measures the power of sinusoidal oscillations. However, neural oscillations are often non-sinusoidal, and this can lead to some erroneous outputs. For example, a non-sinusoidal oscillation will often lead to spurious peaks in power at harmonic frequencies of the actual oscillation frequency. This occurs when the fourier analysis decomposes the non-sinusoidal oscillation into a sinusoidal oscillation at its true frequency, and resulting in leftover signal that can be composed from harmonics of that frequency <a class="reference external" href="#references">[2]</a></p>
 </section>
 </section>
 <section id="references">

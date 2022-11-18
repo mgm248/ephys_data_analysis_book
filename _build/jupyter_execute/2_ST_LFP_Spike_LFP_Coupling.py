@@ -3,7 +3,7 @@
 
 # # Spike-LFP Coupling
 # 
-# Neural oscillations affect the spike timing of neurons. Identifying how neurons fire in relation to oscillations can help uncover which neurons participate in an oscillation, and and to what degree. This notebook will demonstrate how to quantify how the spike timing of neurons relates to underlying oscillations. Specifically, this notebook shows how to:
+# Neural oscillations reflect the spike timing of neurons. Identifying how neurons fire in relation to oscillations can help uncover which neurons participate in an oscillation, and and to what degree. This notebook will demonstrate how to quantify how the spike timing of neurons relates to underlying oscillations. Specifically, this notebook shows how to:
 # 1. Filter data into a frequency band
 # 2. Extract phase information
 # 3. Visualize spike-lfp coupling
@@ -55,7 +55,7 @@ for spike in spike_times:
 # Filtering is used to emphasize or demphasize activity in particular frequencies in time-series. Common applications of filters to neural electrophysiological data are to remove 60Hz line noise, remove low frequency activity for spike detection / remove high frequency activity for LFP analyses, and to isolate specific oscillations. 
 # 
 # 
-# There are many commonly used filter designs, with customizable parameters. The goal of each filter is to maximize the attennuation of unwanted frequencies, which can be best achieved using filters with a narrow transition band in frequency space. However, these "sharp" filters produce stronger signal distortions and ringing artifacts. Therefore, choices in filter design often come down to this trade-off [[1]](#References). Additionally, higher filter orders effectively decrease the time resolution while increasing the frequency resolution. Here, we'll use a butterworth filter, which is maximally uniform in how it affects the magnitude of activity in the filtered frequency range. Additionally, we'll use an order of 4. Feel free to try other filter designs (cheby2, bessel) or orders to see their affects.
+# There are many commonly used filter designs, with customizable parameters. The goal of each filter is to maximize the attennuation of unwanted frequencies, which can be best achieved using filters with a narrow transition band in frequency space. However, these "sharp" filters produce stronger signal distortions and ringing artifacts. Therefore, choices in filter design often come down to this trade-off [[1]](#references). Additionally, higher filter orders effectively decrease the time resolution while increasing the frequency resolution. Here, we'll use a butterworth filter, which is maximally uniform in how it affects the magnitude of activity in the filtered frequency range. Additionally, we'll use an order of 4. Feel free to try other filter designs (cheby2, bessel) or orders to see their affects.
 # 
 # Filters are often applied through convolution over the signal. This can distort phase estimation, as convolving in a particular direction will result in a phase shift. To eliminate this shift, filters can be convolved once forwards and then backwards, which we will do with scipy's [filtfilt](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.filtfilt.html) function. 
 
@@ -121,7 +121,7 @@ plt.bar(phase_bins, spike_phase_hist, width=phase_bins[1] - phase_bins[0], botto
 # 
 # **Mean Vector length**
 # 
-# A common way to measure spike phase locking is to take the length of the mean vector of the spike-phase distribution [[2]](#References). If spikes are uniformally distributed with respect to phase, the mean of this distribution will be a point close to the center of the circle, and its radius will be close to 0. On the other hand, if spikes are clustered around some particular phase, the mean vector will point towards that phase and thus will have a radius closer to 1.
+# A common way to measure spike phase locking is to take the length of the mean vector of the spike-phase distribution [[2]](#references). If spikes are uniformally distributed with respect to phase, the mean of this distribution will be a point close to the center of the circle, and its radius will be close to 0. On the other hand, if spikes are clustered around some particular phase, the mean vector will point towards that phase and thus will have a radius closer to 1.
 # 
 # To calculate the mean vector length (mvl) of our distribution, we first need to map the spike phase distribution into polar coordinates and then take their mean. The mvl is then the distance of this point from (0,0).  
 
@@ -143,7 +143,7 @@ print('Mean vector length: '+ str(round(vec_length,3))+', p value: '+str(pval))
 
 
 # We get a p value of 0, indicating phase locking is highly significant. 
-# However, this measure is highly dependent on the number of spikes in our sample [[3]](#References), as small samples will lead to a mean centered away from (0,0) even if spike phases are uniformally distributed.
+# However, this measure is highly dependent on the number of spikes in our sample [[3]](#references), as small samples will lead to a mean centered away from (0,0) even if spike phases are uniformally distributed.
 # 
 # One way to get around this is to repeatedly estimate the mvl on a surrogate spike phase distribution with the same number of samples as our actual sample, and estimate the difference between our real result and these surrogate estimates.
 
@@ -169,7 +169,7 @@ plt.text(.6, 20, 'Z-score: '+ str(z_score))
 
 #  **Pairwise Phase Consistency**
 #  
-#  Alternatively, another measure of spike-phase locking, pairwise phase consistency (ppc), is unbiased by the number of samples [[3]](#References). The measure computes the cosine of the angular distance between each pair of phases, resulting in an output of 1 for pairs of the same phase and -1 for antiphase pairs. After averaging across pairs, the measure will approach 0 for a uniform phase distribution and 1 for a perfectly aligned phase distribution.
+#  Alternatively, another measure of spike-phase locking, pairwise phase consistency (ppc), is unbiased by the number of samples [[3]](#references). The measure computes the cosine of the angular distance between each pair of phases, resulting in an output of 1 for pairs of the same phase and -1 for antiphase pairs. After averaging across pairs, the measure will approach 0 for a uniform phase distribution and 1 for a perfectly aligned phase distribution.
 
 # In[9]:
 

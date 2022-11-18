@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Spike train analyses" href="3_ST_SpikeTrain_Analyses.html" />
+    <link rel="prev" title="Spike Train Analyses" href="3_ST_SpikeTrain_Analyses.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -132,7 +132,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="3_ST_SpikeTrain_Analyses.html">
-   Spike train analyses
+   Spike Train Analyses
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -518,7 +518,7 @@ title="Print to PDF"
 </section>
 <section id="unitary-event-analysis">
 <h2>Unitary event analysis<a class="headerlink" href="#unitary-event-analysis" title="Permalink to this headline">#</a></h2>
-<p>Unitary event analysis essentially computes the number of synchronous spikes <a class="reference external" href="#References">[1]</a>. Because some number of synchronous spikes are expected by chance, this number is then compared to an ‘expected’ number of spikes.</p>
+<p>Unitary event analysis essentially computes the number of synchronous spikes <a class="reference external" href="#references">[1]</a>. Because some number of synchronous spikes are expected by chance, this number is then compared to an ‘expected’ number of spikes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute number of synchronous spikes</span>
@@ -556,7 +556,7 @@ Number of synchronous events: 43
 </div>
 </div>
 <p>Though simple and efficient, this method works only when the firing rate of neurons is stationary over time. However, the firing rate of neurons can change over time, in ways that are correlated with one another that may be spurious to this analysis. This can occur with the onset of a stimulus, or a neuromodulator.</p>
-<p>To deal with non-stationarities, there are several methods to create surrogate spike trains, which the actual number of synchronous events can be compared with <a class="reference external" href="#References">[2]</a>. Surrogates are commonly created by dithering (or jittering) a spike train by randomly moving each spike by some time within some small time frame. Alternatively, surrogates can be created by randomly shifting spike trains against each other, conserving the original structure of each spike train but requiring ultimately large time shifts. When analyzing synchrony evoked by a stimulus, spike trains can be shifted across trials, such that the number of synchronous events can be compared with the number of synchronous events found when comparing neurons recorded in different trials. However, this analysis assumes stationarity can be assumed across trials, which is generally unlikely.</p>
+<p>To deal with non-stationarities, there are several methods to create surrogate spike trains, which the actual number of synchronous events can be compared with <a class="reference external" href="#references">[2]</a>. Surrogates are commonly created by dithering (or jittering) a spike train by randomly moving each spike by some time within some small time frame. Alternatively, surrogates can be created by randomly shifting spike trains against each other, conserving the original structure of each spike train but requiring ultimately large time shifts. When analyzing synchrony evoked by a stimulus, spike trains can be shifted across trials, such that the number of synchronous events can be compared with the number of synchronous events found when comparing neurons recorded in different trials. However, this analysis assumes stationarity can be assumed across trials, which is generally unlikely.</p>
 <p>Here, let’s dither to create surrogate spike trains, and compare the actual number of synchronous events with this distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -646,7 +646,7 @@ Number of synchronous events: 43
 </section>
 <section id="spike-triggered-population-rate">
 <h2>Spike-triggered population rate<a class="headerlink" href="#spike-triggered-population-rate" title="Permalink to this headline">#</a></h2>
-<p>Alternatively, spike-spike synchrony can be computed as the spike-triggered population rate (stPR), or the firing rate of other neurons when one neuron fires <a class="reference external" href="#References">[3]</a>. This method has several advantages. First, the method can be used to test the synchrony between one neuron and a population of neurons. Therefore, when analyzing the general synchrony of each neuron, rather than neuron synchrony between individual neurons, this method can be much more efficient. Additionally, as demonstrated later, this method does not require the generation of surrogate neural spiketrains to control for a non-stationarity spikerate. As a result, this method can be much more computationally efficient in analyzing the neural synchrony between a neuron and a population of neurons. Finally, this method provides a synchrony value for each spike, rather than for a given window of time, allowing for finer time resolution in analyzing synchrony.</p>
+<p>Alternatively, spike-spike synchrony can be computed as the spike-triggered population rate (stPR), or the firing rate of other neurons when one neuron fires <a class="reference external" href="#references">[3]</a>. This method has several advantages. First, the method can be used to test the synchrony between one neuron and a population of neurons. Therefore, when analyzing the general synchrony of each neuron, rather than neuron synchrony between individual neurons, this method can be much more efficient. Additionally, as demonstrated later, this method does not require the generation of surrogate neural spiketrains to control for a non-stationarity spikerate. As a result, this method can be much more computationally efficient in analyzing the neural synchrony between a neuron and a population of neurons. Finally, this method provides a synchrony value for each spike, rather than for a given window of time, allowing for finer time resolution in analyzing synchrony.</p>
 <p>To illustrate this method, we’ll start off by simulating a neuron, and a neural population, each firing in a synchronized rhythm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -884,7 +884,7 @@ Mean stPR: 16.170752011037074 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1d02aca3610&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1ec179615b0&gt;
 </pre></div>
 </div>
 <img alt="_images/4_ST_Spike_Synchrony_35_1.png" src="_images/4_ST_Spike_Synchrony_35_1.png" />
@@ -895,7 +895,7 @@ Mean stPR: 16.170752011037074 Hz
 </section>
 <section id="convolution-of-a-cross-correlation">
 <h2>Convolution of a cross correlation<a class="headerlink" href="#convolution-of-a-cross-correlation" title="Permalink to this headline">#</a></h2>
-<p>Other studies have convolved the cross correlation histogram, rather than the spike trains themselves, to estimate synchrony. Specifically, after a cross correlelogram has been computed, slower covariations in firing rate are estimated by convolving the cross correlelogram with a gaussian kerenel. The significance of each bin can then be compared to the convolved correlelogram, asssuming a poisson distribution <a class="reference external" href="#References">[4]</a>. This method therefore allows for the estimation of significance without jittering. Additionally, this method can also be applied towards identifying peaks in the cross correlelogram at time lags other than 0, for example, to identify a monosynaptic connection between neurons from a peak at +3ms <a class="reference external" href="#References">[5]</a>. However, the time resolution of this method is limited, as a cross correlelogram must be computed with a sufficent time window to include a reasonable estimate of the distribution at various time lags. This method has not been used by our lab, but the Buzsaki lab has published <a class="reference external" href="#https://github.com/AntonioFR8/buzcodeAFR/blob/devAFR/analysis/monosynapticPairs/bz_GetMonoSynapticallyConnected.m">example code</a> on Github.</p>
+<p>Other studies have convolved the cross correlation histogram, rather than the spike trains themselves, to estimate synchrony. Specifically, after a cross correlelogram has been computed, slower covariations in firing rate are estimated by convolving the cross correlelogram with a gaussian kerenel. The significance of each bin can then be compared to the convolved correlelogram, asssuming a poisson distribution <a class="reference external" href="#references">[4]</a>. This method therefore allows for the estimation of significance without jittering. Additionally, this method can also be applied towards identifying peaks in the cross correlelogram at time lags other than 0, for example, to identify a monosynaptic connection between neurons from a peak at +3ms <a class="reference external" href="#references">[5]</a>. However, the time resolution of this method is limited, as a cross correlelogram must be computed with a sufficent time window to include a reasonable estimate of the distribution at various time lags. This method has not been used by our lab, but the Buzsaki lab has published <a class="reference external" href="#https://github.com/AntonioFR8/buzcodeAFR/blob/devAFR/analysis/monosynapticPairs/bz_GetMonoSynapticallyConnected.m">example code</a> on Github.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
@@ -940,7 +940,7 @@ Mean stPR: 16.170752011037074 Hz
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Spike train analyses</p>
+            <p class="prev-next-title">Spike Train Analyses</p>
         </div>
     </a>
 </div>

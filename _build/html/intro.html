@@ -50,6 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Identifying Oscillations" href="0_LFP_Identifying_Oscillations.html" />
@@ -293,12 +295,51 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contents">
+   Contents
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements">
+   Requirements
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#authors">
+   Authors
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -310,6 +351,34 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contents">
+   Contents
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements">
+   Requirements
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#authors">
+   Authors
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -319,16 +388,83 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="analysis-of-electrophysiological-data-in-neuroscience">
 <h1>Analysis of Electrophysiological Data in Neuroscience<a class="headerlink" href="#analysis-of-electrophysiological-data-in-neuroscience" title="Permalink to this headline">#</a></h1>
-<p>Tutorials and scripts for analyzing electrophysiological (LFP and spike train) data.</p>
+<p><em>Tutorials and scripts for analyzing electrophysiological (LFP and spike train) data.</em></p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>In neuroscience, electrophysiological data is commonly collected in order to analyze neural spiking and local field potential activity. Much of the material covers frequently used analyses in the field, such as power spectra / spectrograms, coherence, spike raster / rate plots, and spike-lfp coupling. In addition, these tutorials contain cover less frequently applied analyses, such as measures of directionality between LFP signals, and measures of spike synchrony.</p>
+</section>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html">Identifying Oscillations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="1_LFP_Coherence_Directionality.html">Coherence and Directionality</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_ST_LFP_Spike_LFP_Coupling.html">Spike-LFP Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html">Spike Train Analyses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4_ST_Spike_Synchrony.html">Spike Synchrony</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html">Identifying Oscillations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html#frequency-domain">Frequency Domain</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html#power-spectrum">Power Spectrum</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html#time-frequency-domains">Time Frequency Domains</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html#window-analysis">Window analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html#morlet-wavelets">Morlet wavelets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="0_LFP_Identifying_Oscillations.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="1_LFP_Coherence_Directionality.html">Coherence and Directionality</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="1_LFP_Coherence_Directionality.html#time-frequency">Time-frequency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1_LFP_Coherence_Directionality.html#directionality">Directionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1_LFP_Coherence_Directionality.html#amplitude-correlation">Amplitude Correlation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1_LFP_Coherence_Directionality.html#phase-slope-index">Phase Slope Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1_LFP_Coherence_Directionality.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2_ST_LFP_Spike_LFP_Coupling.html">Spike-LFP Coupling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2_ST_LFP_Spike_LFP_Coupling.html#filtering-and-phase">Filtering and Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_ST_LFP_Spike_LFP_Coupling.html#quantify-spike-lfp-coupling">Quantify Spike LFP-Coupling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_ST_LFP_Spike_LFP_Coupling.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html">Spike Train Analyses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#raster-plot">Raster plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#spike-rate-estimation-using-kernel-density-estimation">Spike rate estimation using kernel density estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#rhythmicity">Rhythmicity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#autocorrelation">Autocorrelation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#power-metrics-of-spike-rate">Power metrics of spike rate</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#stimulus-encoding">Stimulus encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#principle-component-analysis">Principle Component Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="3_ST_SpikeTrain_Analyses.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4_ST_Spike_Synchrony.html">Spike Synchrony</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="4_ST_Spike_Synchrony.html#cross-correlation">Cross correlation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_ST_Spike_Synchrony.html#unitary-event-analysis">Unitary event analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_ST_Spike_Synchrony.html#spike-triggered-population-rate">Spike-triggered population rate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_ST_Spike_Synchrony.html#kernel-design">Kernel design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_ST_Spike_Synchrony.html#convolution-of-a-cross-correlation">Convolution of a cross correlation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_ST_Spike_Synchrony.html#references">References</a></li>
+</ul>
+</li>
 </ul>
 </div>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">#</a></h2>
+<p>matplotlib, numpy, scipy, mne<span class="math notranslate nohighlight">\(^{1}\)</span>, math, itertools, random, time, elephant<span class="math notranslate nohighlight">\(^{2}\)</span>, viziphant<span class="math notranslate nohighlight">\(^{2}\)</span>, neo<span class="math notranslate nohighlight">\(^{3}\)</span>, quantaties, sklearn, seaborn</p>
+<p>Noted packages are dedicated to electrophysiological data analysis, including:</p>
+<ol class="simple">
+<li><p><a class="reference external" href="https://mne.tools/stable/index.html">MNE</a>: Primarily designed for analyzing EEG+MEG data, this package still is a great resource for analyzing LFP data</p></li>
+<li><p><a class="reference external" href="https://elephant.readthedocs.io/en/latest/index.html">Elephant</a> + <a class="reference external" href="https://viziphant.readthedocs.io/en/latest/">viziphant</a> (visualization companion package): Excellent package for spike train analyses, in addition to some LFP analyses</p></li>
+<li><p><a class="reference external" href="https://neo.readthedocs.io/en/stable/">Neo</a>: Supports ephys object structures</p></li>
+</ol>
+</section>
+<section id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">#</a></h2>
+<p>This material was created by the <a class="reference external" href="http://cplab.net/">Computational Physiology Laboratory</a> at Cornell University. Michael Mariscal wrote and published this work, with support from PI’s Thomas Cleland and Christiane Linster, and additional help from Jesse Werth and Matt Einhorn.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

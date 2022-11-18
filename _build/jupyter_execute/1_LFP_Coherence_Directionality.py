@@ -3,7 +3,9 @@
 
 # # Coherence and Directionality
 # 
-# This notebook will illustrate how to calculate the coherence between two signals, and then the directionality of information flow between two areas. Specifically, this notebook shows how to quantify:
+# Understanding dynamical connectivity of the brain is critical to understanding both the function of individual areas and their interaction. In invasive LFP recordings, connectivity can be studied from recordings of different regions, while EEG studies offer the opportunity to study connectivity across huge areas of the brain. These tutorials will introduce measures of coherence and directionality between electrophysiological siganls. Coherence, a measure of the degree to which two signals exhibit an identical oscillation, can be used to capture connectivity. In addition, given some degree of shared activity, some methods attempt to quantify the directionality of this activity: that is, whether one signal leads (and potentially drives) the other.
+# 
+# Specifically, this notebook shows how to quantify:
 # 1. Coherence + phase offset in the frequecy domain
 # 2. Coherence + phase offset in the time-frequency domains
 # 3. Amplitude correlation
@@ -38,7 +40,7 @@ plt.plot(times, lfp2, label='lfp2')
 
 # Now, let's measure the coherence. To do so, we'll first need to calculate the **cross spectral density** between the two signals. The difference between power and coherence comes down to performing an autocorrelation instead of a cross correlation. Where the autocorrelation of a signal is computed by convolving a signal with itself, a cross-correlation is computed by convolving one signal with another. The power spectral density is then the Fourier Transform of the autocorrelation, and the cross spectral density is the Fourier Transform of the cross-correlation.
 # 
-# Coherence is computed as the magnitude-squared cross spectral density, normalized by the power spectrum of each signal [[1]](#References). Therefore, coherence will be between 0 (where the two signals are completely uncorrelated) and 1 (where the two signals are perfectly correlated) at each frequency.
+# Coherence is computed as the magnitude-squared cross spectral density, normalized by the power spectrum of each signal [[1]](#references). Therefore, coherence will be between 0 (where the two signals are completely uncorrelated) and 1 (where the two signals are perfectly correlated) at each frequency.
 # 
 # The equation for computing coherence is therefore $Coh_{xy} = \frac{|Pxy|^{2}}{Pxx*Pyy}$, where Pxx is the power spectrum of x, Pyy is the power spectrum of y, and Pxy is the cross spectrum of x and y.
 # 
@@ -73,7 +75,7 @@ plt.xlabel('Frequency (Hz)')
 plt.ylabel('Coherence')
 
 
-# We can also get the phase difference between the two signals at each frequency just by taking the phase of Pxy.
+# Additionally, we can get the phase difference between the two signals at each frequency just by taking the phase of Pxy.
 
 # In[5]:
 
@@ -89,7 +91,7 @@ plt.ylabel('Phase difference (radians)')
 # 
 # ## Time-frequency
 # 
-# Now, let's try computing coherence in the time frequency domain. This is not as straightforward as computing power in the time frequency domain. Coherence is essentially a correlation measure, and to compute a correlation, you need multiple samples from each signal. Therefore, we cannot take two signals and compute their coherence at each sample. Instead, there are two common approaches to compute coherence in the time-frequency domains. The first is to compute coherence in windows over time, or after smoothing the data over time resulting in decreased resolution over time [[2]](#References). The other is to compute the coherence over trials, rather than time, allowing for an estimation of time frequency coherence without any loss of time or frequency resolution. 
+# Now, let's try computing coherence in the time frequency domain. This is not as straightforward as computing power in the time frequency domain. Coherence is essentially a correlation measure, and to compute a correlation, you need multiple samples from each signal. Therefore, we cannot take two signals and compute their coherence at each sample. Instead, there are two common approaches to compute coherence in the time-frequency domains. The first is to compute coherence in windows over time, or after smoothing the data over time resulting in decreased resolution over time [[2]](#references). The other is to compute the coherence over trials, rather than time, allowing for an estimation of time frequency coherence without any loss of time or frequency resolution. 
 # 
 # Just like for time-frequency analysis of power, we can use MNE supported time-frequency decompositon via morlet wavelets to compute time-frequency coherence. First, let's simulate two signals where their coherence changes over time. 
 
@@ -239,7 +241,7 @@ plt.plot(times, lfp2, label='lfp2')
 
 # ## Amplitude Correlation
 
-# The amplitude correlation is a straightforward method of computing the directionality between two signals. Also referred to as a power envelope correlation [[3]](#References), the method is a cross-correlation of the amplitudes in a frequency between two signals. The first step of this method is to filter each signal in the frequency band of interest, and then compute the amplitude envelope of each by taking the hilbert transform of the filtered signal. Then a cross-correlation is performed between the two amplitude envelopes. Therefore, the amplitude correlation can indicate when the power of the oscillation is most correlated between the two signals, revealing whether an oscillation in one signal precedes or follows an oscillation in another signal.
+# The amplitude correlation is a straightforward method of computing the directionality between two signals. Also referred to as a power envelope correlation [[3]](#references), the method is a cross-correlation of the amplitudes in a frequency between two signals. The first step of this method is to filter each signal in the frequency band of interest, and then compute the amplitude envelope of each by taking the hilbert transform of the filtered signal. Then a cross-correlation is performed between the two amplitude envelopes. Therefore, the amplitude correlation can indicate when the power of the oscillation is most correlated between the two signals, revealing whether an oscillation in one signal precedes or follows an oscillation in another signal.
 
 # In[15]:
 
@@ -272,7 +274,7 @@ print('Correlation is maximal where lag = '+str(lags[np.argmax(xcorr)])+'ms')
 # The two signals are most correlated when the second signal is shifted backwards in time by 10ms, indicating the second signal lags the first by 10ms.
 
 # ## Phase Slope Index
-# A second method to assess the directionality of information flow is the phase slope index (PSI) [[4]](#References). Phase is circular, and thus cannot indicate directionality in itself. However, taking the phase difference over a range of frequencies, one can begin to interpret directionality. PSI assumes one brain area interacts with another with some time offset, such that the speed at which different waves travel is similar. Since the same time difference will result in larger phase differences as frequency increases, there should be a positive slope in the phase spectrum. Therefore, PSI quantifies the slope of the phase spectrum, such that a positive slope indicates the first signal leads the second, and a negative signal indicates the reverse.
+# A second method to assess the directionality of information flow is the phase slope index (PSI) [[4]](#references). Phase is circular, and thus cannot indicate directionality in itself. However, taking the phase difference over a range of frequencies, one can begin to interpret directionality. PSI assumes one brain area interacts with another with some time offset, such that the speed at which different waves travel is similar. Since the same time difference will result in larger phase differences as frequency increases, there should be a positive slope in the phase spectrum. Therefore, PSI quantifies the slope of the phase spectrum, such that a positive slope indicates the first signal leads the second, and a negative signal indicates the reverse.
 
 # In[17]:
 

@@ -3,6 +3,8 @@
 
 format: jb-book
 root: intro
+defaults:
+    titlesonly: False
 chapters:
 - file: 0_LFP_Identifying_Oscillations.ipynb
 - file: 1_LFP_Coherence_Directionality.ipynb
