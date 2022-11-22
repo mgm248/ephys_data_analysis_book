@@ -50,6 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Coherence and Directionality" href="1_LFP_Coherence_Directionality.html" />
@@ -465,10 +467,10 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Load in the LFP, stimulation time data</span>
-<span class="n">fpath</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\Michael\Documents\ephys_analysis_tutorials</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="n">lfp_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fpath</span><span class="o">+</span><span class="s1">&#39;example_lfp_160819_bank2.npy&#39;</span><span class="p">)</span>
-<span class="n">stim_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fpath</span><span class="o">+</span><span class="s1">&#39;example_stim_times_160819_bank2.npy&#39;</span><span class="p">)</span>
-<span class="n">fs</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">fpath</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;data</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">lfp_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fpath</span><span class="o">+</span><span class="s1">&#39;example_lfp.npy&#39;</span><span class="p">)</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1">#sampling rate of lfp, per second</span>
+<span class="n">evt</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># time of the stimulus, in seconds</span>
 </pre></div>
 </div>
 </div>
@@ -477,7 +479,6 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Plot the lfp data in response to stimulation</span>
-<span class="n">evt</span> <span class="o">=</span> <span class="n">stim_times</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span> <span class="c1">#look at the first presentation of the first odor</span>
 <span class="n">time_segment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="o">+</span><span class="mi">1000</span><span class="p">)]</span> <span class="c1">#start and end event times of interest, converted to ms</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">,</span> <span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
@@ -518,7 +519,7 @@ title="Print to PDF"
 <img alt="_images/0_LFP_Identifying_Oscillations_8_1.png" src="_images/0_LFP_Identifying_Oscillations_8_1.png" />
 </div>
 </div>
-<p>The power spectrum is much higher at lower frequencies (&lt;20Hz). This is characteristic of neural LFP data, referred to as 1/f or pink noise, where power systematically decreases with frequency. Still, we can see three peaks in power that go beyond this trend: one around 5Hz, one just below 20Hz, and another small peak around 70Hz. To better visualize this, we should remove the 1/f noise in the data. Though an <a class="reference external" href="https://fooof-tools.github.io/fooof/index.html">excellent tool</a> has been developed for this purpose, we can also remove this noise by normalizing to a baseline period, before odor presentation, where this noise will still be present. This will also help us identify which oscillations are specifically induced by the odor.</p>
+<p>In general, the power is much higher at lower frequencies (&lt;20Hz). This is characteristic of neural LFP data, referred to as 1/f or pink noise, where power systematically decreases with frequency. Still, we can see three peaks in power that go beyond this trend: one around 5Hz, one just below 20Hz, and another small peak around 70Hz. To better visualize this, we should remove the 1/f noise in the data. Though an <a class="reference external" href="https://fooof-tools.github.io/fooof/index.html">excellent tool</a> has been developed for this purpose, we can also remove this noise by normalizing to a baseline period, before odor presentation, where this noise will still be present. This will also help us identify which oscillations are specifically induced by the odor.</p>
 <p>To do so, we’ll take the power spectrum for 1 second of data before the odor was presented, and divide the odor-evoked psd by this baseline psd. <strong>Note</strong>: Make sure your parameters match the ones you used to compute the first power spectrum, or else the frequency resolution won’t match and you won’t be able to normalize.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -531,12 +532,12 @@ title="Print to PDF"
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Pxx_normalized</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Power Spectral Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Power Spectral Density (norm)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Power Spectral Density&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Power Spectral Density (norm)&#39;)
 </pre></div>
 </div>
 <img alt="_images/0_LFP_Identifying_Oscillations_10_1.png" src="_images/0_LFP_Identifying_Oscillations_10_1.png" />
@@ -606,6 +607,8 @@ some information. For example, here, the gamma (~70Hz) oscillation is pretty mut
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">time_segment</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">evt</span><span class="o">*</span><span class="n">fs</span><span class="p">)</span><span class="o">+</span><span class="mi">1500</span><span class="p">]</span> <span class="c1">#start and end event times of interest, converted to ms</span>
+
+<span class="c1"># First figure: optimize time resolution by using smaller segments</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Sxx</span> <span class="o">=</span> <span class="n">spectrogram</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span> <span class="c1">#select only frequencies below 100Hz</span>
 <span class="n">Sxx</span> <span class="o">=</span> <span class="n">Sxx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">],:]</span> <span class="c1">#select only frequencies below 100Hz</span>
@@ -614,8 +617,9 @@ some information. For example, here, the gamma (~70Hz) oscillation is pretty mut
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Increased time resolution&#39;</span><span class="p">)</span>
 
+<span class="c1"># Second figure: optimize frequency resolution by using larger segments</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Sxx</span> <span class="o">=</span> <span class="n">spectrogram</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Sxx</span> <span class="o">=</span> <span class="n">spectrogram</span><span class="p">(</span><span class="n">lfp_data</span><span class="p">[</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">time_segment</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">fs</span><span class="p">,</span> <span class="n">nperseg</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)]</span> <span class="c1">#select only frequencies below 100Hz</span>
 <span class="n">Sxx</span> <span class="o">=</span> <span class="n">Sxx</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f</span><span class="o">&lt;=</span><span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">],:]</span> <span class="c1">#select only frequencies below 100Hz</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Sxx</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">relative_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">relative_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">aspect</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">)</span>
@@ -633,7 +637,7 @@ some information. For example, here, the gamma (~70Hz) oscillation is pretty mut
 </div>
 </div>
 <p>Increasing the frequency resolution, we can see power is increasing in two distinct lower frequency bands, one around 4Hz and another around 20Hz.</p>
-<p>Overall, a window-based spectrogram is a straightforward way to extract oscillatory power over both time and frequency. However, the outputs here are very limited in both time and frequency resolution. When analyzing oscillations over long (&gt;10s) timescales, this is not a problem, and the results will look much better than these. However, we want to analyze oscillation power over a small time window (~1s), and so currently our time and frequency resolution is poor. To better analyze oscillation power in the time and frequency domains for this short time period, a morlet wavelet based analysis is more effective.</p>
+<p>Overall, a window-based spectrogram is a straightforward way to extract oscillatory power over both time and frequency. However, the outputs here are very limited in both time and frequency resolution. When analyzing oscillations over long (&gt;10s) timescales, this is not a problem, and the results will look much better than these. However, we want to analyze oscillation power over a small time window (~1s), and so currently our time and frequency resolution is poor. To better analyze oscillation power in the time and frequency domains for this short time period, a wavelet based analysis is more effective.</p>
 </section>
 <section id="morlet-wavelets">
 <h3>Morlet wavelets<a class="headerlink" href="#morlet-wavelets" title="Permalink to this headline">#</a></h3>
@@ -741,7 +745,9 @@ some information. For example, here, the gamma (~70Hz) oscillation is pretty mut
 </div>
 </div>
 <p>Now, we can see a clear oscillation at 20Hz, and a weak oscillation around 70Hz, around 400ms post odor presentation.</p>
-<p>Each of these analyses measures the power of sinusoidal oscillations. However, neural oscillations are often non-sinusoidal, and this can lead to some erroneous outputs. For example, a non-sinusoidal oscillation will often lead to spurious peaks in power at harmonic frequencies of the actual oscillation frequency. This occurs when the fourier analysis decomposes the non-sinusoidal oscillation into a sinusoidal oscillation at its true frequency, and resulting in leftover signal that can be composed from harmonics of that frequency <a class="reference external" href="#references">[2]</a></p>
+<p><strong>Limitations</strong></p>
+<p>Each of these analyses measures the power of sinusoidal oscillations. However, neural oscillations are often non-sinusoidal, and this can lead to some erroneous outputs. For example, a non-sinusoidal oscillation will often lead to spurious peaks in power at harmonic frequencies of the actual oscillation frequency. This occurs when the fourier analysis decomposes the non-sinusoidal oscillation into a sinusoidal oscillation at its true frequency, resulting in leftover signal that is then decomposed into harmonics of the true frequency <a class="reference external" href="#references">[2]</a>.</p>
+<p>These tutorials have covered basic oscillatory analyses. The next tutorial will cover slightly more advanced analyses, in order to uncover how multiple oscillatory signals relate to each other.</p>
 </section>
 </section>
 <section id="references">

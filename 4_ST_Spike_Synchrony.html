@@ -360,11 +360,13 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#spike-triggered-population-rate">
    Spike-triggered population rate
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#kernel-design">
-   Kernel design
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#controlling-for-firing-rate">
+     Controlling for firing rate
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#convolution-of-a-cross-correlation">
@@ -409,11 +411,13 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#spike-triggered-population-rate">
    Spike-triggered population rate
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#kernel-design">
-   Kernel design
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#controlling-for-firing-rate">
+     Controlling for firing rate
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#convolution-of-a-cross-correlation">
@@ -460,7 +464,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>First, let’s simulate 2 neurons, synchronized to the same underlying oscillation. Here, we can model this by generating two spike trains from the same underlying rhythmic firing rate.</p>
+<p>First, let’s simulate 2 neurons, synchronized to the same underlying oscillation (and consequently, synchronized to each other). Here, we can model this by generating two spike trains from the same underlying rhythmic firing rate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1224</span><span class="p">)</span>
@@ -556,7 +560,7 @@ Number of synchronous events: 43
 </div>
 </div>
 <p>Though simple and efficient, this method works only when the firing rate of neurons is stationary over time. However, the firing rate of neurons can change over time, in ways that are correlated with one another that may be spurious to this analysis. This can occur with the onset of a stimulus, or a neuromodulator.</p>
-<p>To deal with non-stationarities, there are several methods to create surrogate spike trains, which the actual number of synchronous events can be compared with <a class="reference external" href="#references">[2]</a>. Surrogates are commonly created by dithering (or jittering) a spike train by randomly moving each spike by some time within some small time frame. Alternatively, surrogates can be created by randomly shifting spike trains against each other, conserving the original structure of each spike train but requiring ultimately large time shifts. When analyzing synchrony evoked by a stimulus, spike trains can be shifted across trials, such that the number of synchronous events can be compared with the number of synchronous events found when comparing neurons recorded in different trials. However, this analysis assumes stationarity can be assumed across trials, which is generally unlikely.</p>
+<p>To deal with non-stationarities, there are several methods to create surrogate spike trains, which the actual number of synchronous events can be compared with <a class="reference external" href="#references">[2]</a>. Surrogates are commonly created by dithering (or jittering) a spike train by randomly moving each spike by some time within some small time frame. Alternatively, surrogates can be created by randomly shifting spike trains against each other, conserving the original structure of each spike train but requiring ultimately large time shifts. Finally, when analyzing synchrony evoked by a stimulus, spike trains can be shifted across trials, such that the number of synchronous events can be compared with the number of synchronous events found when comparing neurons recorded in different trials. However, this analysis assumes stationarity can be assumed across trials, which is generally unlikely.</p>
 <p>Here, let’s dither to create surrogate spike trains, and compare the actual number of synchronous events with this distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -646,7 +650,7 @@ Number of synchronous events: 43
 </section>
 <section id="spike-triggered-population-rate">
 <h2>Spike-triggered population rate<a class="headerlink" href="#spike-triggered-population-rate" title="Permalink to this headline">#</a></h2>
-<p>Alternatively, spike-spike synchrony can be computed as the spike-triggered population rate (stPR), or the firing rate of other neurons when one neuron fires <a class="reference external" href="#references">[3]</a>. This method has several advantages. First, the method can be used to test the synchrony between one neuron and a population of neurons. Therefore, when analyzing the general synchrony of each neuron, rather than neuron synchrony between individual neurons, this method can be much more efficient. Additionally, as demonstrated later, this method does not require the generation of surrogate neural spiketrains to control for a non-stationarity spikerate. As a result, this method can be much more computationally efficient in analyzing the neural synchrony between a neuron and a population of neurons. Finally, this method provides a synchrony value for each spike, rather than for a given window of time, allowing for finer time resolution in analyzing synchrony.</p>
+<p>Alternatively, spike-spike synchrony can be computed as the spike-triggered population rate (stPR), or the firing rate of other neurons when one neuron fires <a class="reference external" href="#references">[3]</a>. This method has several advantages. First, the method can be used to test the synchrony between one neuron and a population of neurons. Therefore, when analyzing the general synchrony of each neuron, rather than neuron synchrony between individual neurons, this method can be much more efficient. Additionally, as demonstrated later, this method does not require the generation of surrogate neural spiketrains to control for a non-stationary spikerate. As a result, this method can be much more computationally efficient in analyzing the neural synchrony between a neuron and a population of neurons. Finally, this method provides a synchrony value for each spike, rather than for a given window of time, allowing for finer time resolution in analyzing synchrony.</p>
 <p>To illustrate this method, we’ll start off by simulating a neuron, and a neural population, each firing in a synchronized rhythm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -739,6 +743,8 @@ Mean stPR: 66.67997370011862 Hz
 </div>
 </div>
 <p>We have essentially created a cross correlation figure, using the firing rate of unit 1.</p>
+<section id="controlling-for-firing-rate">
+<h3>Controlling for firing rate<a class="headerlink" href="#controlling-for-firing-rate" title="Permalink to this headline">#</a></h3>
 <p>However, this method is biased by the mean firing rate of the population: if neurons fire more in general, the stPR will be higher. Thus, just as with unitary event analysis, we need to find a method to control for the overall firing rate of the population.</p>
 <p>In the original paper for this method, the authors did so via a shuffling method. Though their exact method does not suit our data, we can implement something similar by comparing with surrogate spike trains as we did before.</p>
 <div class="cell docutils container">
@@ -840,9 +846,7 @@ Mean stPR: 16.170752011037074 Hz
 </div>
 </div>
 <p>The stPR is much higher than 0, indicating the neuron is synchronous with the population. Notably, unlike the other methods, this analysis does not provide a significance value. Still, these values can be compared between neurons, or with a baseline.</p>
-</section>
-<section id="kernel-design">
-<h2>Kernel design<a class="headerlink" href="#kernel-design" title="Permalink to this headline">#</a></h2>
+<p><strong>Kernel Design</strong></p>
 <p>We can get a more exact idea of what firing rate changes this timescale is estimating by plotting how each kernel estimates the firing rate of a single spike.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -884,7 +888,7 @@ Mean stPR: 16.170752011037074 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1ec179615b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x21f5ffc3850&gt;
 </pre></div>
 </div>
 <img alt="_images/4_ST_Spike_Synchrony_35_1.png" src="_images/4_ST_Spike_Synchrony_35_1.png" />
@@ -892,6 +896,7 @@ Mean stPR: 16.170752011037074 Hz
 </div>
 <p>The narrower kernel results in an estimatation of firing rate that only increases immediately surrounding the spike, but increases to a much higher degree. Specifically, using a 3ms and 11ms sigma for the fine and slow time-scale kernels, respectively, the fine-timescale firing rate is increased in the 10ms surrounding the spike, but decreased in the remaining 60ms. Therefore, this metric will be positive when the difference between two spike times is less than 5ms, or negative when the difference is between 5 and ~30ms.</p>
 <p>Using this method, the timescales of the kernels should be carefully designed to reflect what the study would like to define as synchrony, and what general fluctuations should be removed.</p>
+</section>
 </section>
 <section id="convolution-of-a-cross-correlation">
 <h2>Convolution of a cross correlation<a class="headerlink" href="#convolution-of-a-cross-correlation" title="Permalink to this headline">#</a></h2>
@@ -901,7 +906,7 @@ Mean stPR: 16.170752011037074 Hz
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Grün, S., Diesmann, M., Grammont, F., Riehle, A., &amp; Aertsen, A. (1999). Detecting unitary events without discretization of time. Journal of neuroscience methods, 94(1), 67-79</p></li>
-<li><p>Grün, S. (2009). Data-driven significance estimation for precise spike correlation. Journal of Neurophysiology, 101(3), 1126–1140. <a class="reference external" href="https://doi.org/10.1152/JN.00093.2008/ASSET/IMAGES/LARGE/Z9K0030993390009.JPEG">https://doi.org/10.1152/JN.00093.2008/ASSET/IMAGES/LARGE/Z9K0030993390009.JPEG</a></p></li>
+<li><p>Grün, S. (2009). Data-driven significance estimation for precise spike correlation. Journal of Neurophysiology, 101(3), 1126–1140. <a class="reference external" href="https://doi.org/10.1152/jn.00093.2008G">https://doi.org/10.1152/jn.00093.2008G</a></p></li>
 <li><p>Okun, M., Steinmetz, N. A., Cossell, L., Iacaruso, M. F., Ko, H., Barthó, P., Moore, T., Hofer, S. B., Mrsic-Flogel, T. D., Carandini, M., &amp; Harris, K. D. (2015). Diverse coupling of neurons to populations in sensory cortex. Nature, 521(7553), 511. <a class="reference external" href="https://doi.org/10.1038/NATURE14273">https://doi.org/10.1038/NATURE14273</a></p></li>
 <li><p>Stark, E., &amp; Abeles, M. (2009). Unbiased estimation of precise temporal correlations between spike trains. Journal of Neuroscience Methods, 179(1), 90–100. <a class="reference external" href="https://doi.org/10.1016/J.JNEUMETH.2008.12.029">https://doi.org/10.1016/J.JNEUMETH.2008.12.029</a></p></li>
 <li><p>English, D. F., McKenzie, S., Evans, T., Kim, K., Yoon, E., &amp; Buzsáki, G. (2017). Pyramidal cell-interneuron circuit architecture and dynamics in hippocampal networks. Neuron, 96(2), 505. <a class="reference external" href="https://doi.org/10.1016/J.NEURON.2017.09.033">https://doi.org/10.1016/J.NEURON.2017.09.033</a></p></li>

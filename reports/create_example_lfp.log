@@ -1,0 +1,42 @@
+Traceback (most recent call last):
+  File "C:\Users\Michael\anaconda3\envs\tutorials\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+    executenb(
+  File "C:\Users\Michael\anaconda3\envs\tutorials\lib\site-packages\nbclient\client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\Michael\anaconda3\envs\tutorials\lib\site-packages\nbclient\util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\Users\Michael\anaconda3\envs\tutorials\lib\site-packages\nbclient\util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\Michael\anaconda3\envs\tutorials\lib\asyncio\base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "C:\Users\Michael\anaconda3\envs\tutorials\lib\site-packages\nbclient\client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\Michael\anaconda3\envs\tutorials\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\Michael\anaconda3\envs\tutorials\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+
+fpath = (r'C:\Users\Michael\Documents\ephys_analysis_tutorials\\')
+lfp_data = np.load(fpath+'example_lfp_160819_bank2.npy')
+stim_times = np.load(fpath+'example_stim_times_160819_bank2.npy')
+evt = stim_times[0,7] #look at the first presentation of the first odor
+time_segment = [int(evt*fs)-2000, int(evt*fs+2000)] #start and end event times of interest, converted to ms
+seg_data = lfp_data[time_segment[0]:time_segment[1]]
+np.save(fpath+'example_lfp.npy', seg_data)
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn [1], line 7[0m
+[0;32m      5[0m stim_times [38;5;241m=[39m np[38;5;241m.[39mload(fpath[38;5;241m+[39m[38;5;124m'[39m[38;5;124mexample_stim_times_160819_bank2.npy[39m[38;5;124m'[39m)
+[0;32m      6[0m evt [38;5;241m=[39m stim_times[[38;5;241m0[39m,[38;5;241m7[39m] [38;5;66;03m#look at the first presentation of the first odor[39;00m
+[1;32m----> 7[0m time_segment [38;5;241m=[39m [[38;5;28mint[39m(evt[38;5;241m*[39m[43mfs[49m)[38;5;241m-[39m[38;5;241m2000[39m, [38;5;28mint[39m(evt[38;5;241m*[39mfs[38;5;241m+[39m[38;5;241m2000[39m)] [38;5;66;03m#start and end event times of interest, converted to ms[39;00m
+[0;32m      8[0m seg_data [38;5;241m=[39m lfp_data[time_segment[[38;5;241m0[39m]:time_segment[[38;5;241m1[39m]]
+[0;32m      9[0m np[38;5;241m.[39msave(fpath[38;5;241m+[39m[38;5;124m'[39m[38;5;124mexample_lfp.npy[39m[38;5;124m'[39m, seg_data)
+
+[1;31mNameError[0m: name 'fs' is not defined
+NameError: name 'fs' is not defined
+

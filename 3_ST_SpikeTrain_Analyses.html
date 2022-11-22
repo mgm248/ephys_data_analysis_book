@@ -50,8 +50,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Spike Synchrony" href="4_ST_Spike_Synchrony.html" />
@@ -353,8 +351,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#spike-rate-estimation-using-kernel-density-estimation">
-   Spike rate estimation using kernel density estimation
+  <a class="reference internal nav-link" href="#spike-rate-estimation">
+   Spike rate estimation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -379,6 +377,11 @@ title="Print to PDF"
    Stimulus encoding
   </a>
   <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#raster-plots">
+     Raster plots
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#principle-component-analysis">
      Principle Component Analysis
@@ -416,8 +419,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#spike-rate-estimation-using-kernel-density-estimation">
-   Spike rate estimation using kernel density estimation
+  <a class="reference internal nav-link" href="#spike-rate-estimation">
+   Spike rate estimation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -442,6 +445,11 @@ title="Print to PDF"
    Stimulus encoding
   </a>
   <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#raster-plots">
+     Raster plots
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#principle-component-analysis">
      Principle Component Analysis
@@ -539,8 +547,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="spike-rate-estimation-using-kernel-density-estimation">
-<h2>Spike rate estimation using kernel density estimation<a class="headerlink" href="#spike-rate-estimation-using-kernel-density-estimation" title="Permalink to this headline">#</a></h2>
+<section id="spike-rate-estimation">
+<h2>Spike rate estimation<a class="headerlink" href="#spike-rate-estimation" title="Permalink to this headline">#</a></h2>
 <p>It is often useful to estimate how the spike rate of a neuron changes over time. A classical and effective method is kernel density estimation, where a kernel function is convolved with a spike train <a class="reference external" href="#references">[2]</a>. Common kernel functions include a gaussian kernel, which facilitates a smooth estimate of spike rate over time, or an exponential kernel, which can be used to prevent the smoothing of spike rate estimation backwards in time. Additionally, the user must decide the width of the kernel. Wider kernels smooth the spike rate estimation over longer periods of time (and thus risk smoothing over important changes in spike rate), while narrow kernels can produce noisy fluctuations in firing rate estimation. Here, I’ve selected a guassian kernel with a width (or standard deviation in time) of 5ms, where we can observe firing rate increase and decrease over the 20Hz (50ms cycle) rhythm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -582,12 +590,10 @@ title="Print to PDF"
 <h2>Rhythmicity<a class="headerlink" href="#rhythmicity" title="Permalink to this headline">#</a></h2>
 <section id="autocorrelation">
 <h3>Autocorrelation<a class="headerlink" href="#autocorrelation" title="Permalink to this headline">#</a></h3>
-<p>Performing an autocorrelation on this spiketrain will allow us to capture the rhythmicity. Generally, an autocorrelation of a spike train computes the difference between the spike time of each spike with all other spike times in the spike train. If the neuron fires rhythmically, this will be reflected in the autocorrelation as an increased number of spikes at multiples of some time difference relative to 0.</p>
+<p>Performing an autocorrelation on this spiketrain will allow us to capture its rhythmicity. Generally, an autocorrelation of a spike train computes the difference between the spike time of each spike with all other spike times in the spike train. If the neuron fires rhythmically, this will be reflected in the autocorrelation as an increased number of spikes at multiples of some time difference relative to 0.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute autocorrelation of neuron</span>
-
-<span class="c1"># spikes = [t.item() for t in spikes] #convert spiketrain into a list of spike times</span>
 
 <span class="n">binsize</span> <span class="o">=</span> <span class="mf">.005</span>
 <span class="n">histo_bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">times</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">binsize</span><span class="p">)</span>
@@ -612,12 +618,10 @@ title="Print to PDF"
 </div>
 <p>Here, we can see some rhythmicity in the comb-like appearence of the histogram, reflecting repeated time differences where spikes are more likely to occur. However, there is also a clear decrease in spike counts as the time differences increase. This is an artifact resulting from computing the autocorrelation at the beginning and end of the spike train. When comparing the time differences of other spikes relative to the first spike, time differences can only be positive, and for the last spike, time differences can be negative. Similarly, only spikes at the very beginning or end of the spike train can have a time difference with another spike close to 1. As we compute using spikes closer to the center of the spike train, the window of possible spike times increases, resulting in a linear increase in overall spike counts as time differences move closer to 0.</p>
 <p>This artifact is really only relevant when computing auto-correlations on a short spike train, when the time differences of interest can approach the length of the spike train. Therefore, when computing an overall autocorrelation over the course of a recording, this will not be a problem, but when computing an autocorrelation over the course of a second or two (e.g. to see whether a stimulus induced rhythmicity), this affect will need to be addressed.</p>
-<p>To remove this effect, establish the maximal time lag of interest. Then, we know which spikes to exclude: spikes that occur within the maximal lag of the start and end of the spike train.</p>
+<p>To remove this effect, establish the maximal time lag of interest. We can then selectively analyze spikes that occur after the beginning of our recording + this lag, or before the end of our recording - this lag, such that +/- this lag is contained in our recording period. Increasing this maximal lag will result in fewer valid spikes in our sample, while decreasing this lag will result in a smaller window of time lags analyzed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute autocorrelation for only valid spikes</span>
-
-<span class="c1"># spikes = [t.item() for t in spikes] #convert spiketrain into a list of spike times</span>
 
 <span class="n">binsize</span> <span class="o">=</span> <span class="mf">.005</span>
 <span class="n">max_lag</span> <span class="o">=</span> <span class="mf">.2</span>
@@ -651,7 +655,7 @@ title="Print to PDF"
 </section>
 <section id="power-metrics-of-spike-rate">
 <h3>Power metrics of spike rate<a class="headerlink" href="#power-metrics-of-spike-rate" title="Permalink to this headline">#</a></h3>
-<p>Analyses applied to quantify LFP oscillatory power can also be applied to the spike rate of our spike train <a class="reference external" href="#references">[3]</a>. Here, the kernel size must be chosen carefully, as a kernel smoothing the spike train over a long period of time will smear high frequency rhythmic activity, while smoothing over short periods of time can lead to a noisy signal. Here, we’ll analyze the power spectrum and time frequency power of the spike rate.</p>
+<p>Analyses applied to quantify LFP oscillatory power can also be applied to the spike rate estimation of our spike train <a class="reference external" href="#references">[3]</a>. Here, the kernel size must be chosen carefully, as a kernel smoothing the spike train over a long period of time will smear high frequency rhythmic activity, while smoothing over short periods of time can lead to a noisy signal. Here, we’ll analyze the power spectrum and time frequency power of the spike rate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampling_period</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">pq</span><span class="o">.</span><span class="n">ms</span>
@@ -720,8 +724,10 @@ title="Print to PDF"
 </section>
 <section id="stimulus-encoding">
 <h2>Stimulus encoding<a class="headerlink" href="#stimulus-encoding" title="Permalink to this headline">#</a></h2>
-<p>A common step in electrophsiological experiments is to assess whether neural spiking activity can reflect stimulus information. To do so, we can start by plotting how individual neurons respond to different stimuli.</p>
-<p>Let’s say we have a neuron responding to 4 stimuli, where the neuron’s response depends on the stimuli. Let’s make a raster plot, where different stimuli are plotted using different colors.</p>
+<p>A common step in electrophsiological experiments is to assess whether neural spiking activity can reflect stimulus information. Usually, this is done using spike rates, assuming neurons respond to stimuli by increasing their spike rate. Here, we’ll visualize stimulus responses using raster plots, and later PCA analysis.</p>
+<section id="raster-plots">
+<h3>Raster plots<a class="headerlink" href="#raster-plots" title="Permalink to this headline">#</a></h3>
+<p>Let’s say we have a neuron responding to 4 stimuli, where the neuron’s response depends on the stimuli. First, we’ll plot how individual neurons respond to different stimuli. To do so, let’s make a raster plot, where different stimuli are plotted using different colors.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_stim</span> <span class="o">=</span> <span class="mi">4</span>
@@ -763,10 +769,11 @@ title="Print to PDF"
 </div>
 </div>
 <p>The neuron’s response rate should reflect the stimuli.</p>
-<p>Now, what if we have 10 neurons, each with independent stimulus preferences. We’d like to be able to assess how these neurons could encode for stimuli as a population. However, we can’t effectively visualize the activity of 10 neurons over 10 trials and 4 stimuli. Instead, we can use principle component analysis (PCA) to reduce the activity of the population of neurons into 2 or 3 components.</p>
+</section>
 <section id="principle-component-analysis">
 <h3>Principle Component Analysis<a class="headerlink" href="#principle-component-analysis" title="Permalink to this headline">#</a></h3>
-<p>PCA reduces some features into a smaller number of components. In neuroscience, PCA is used to reduce the activity from some number of neurons into 2 or 3 components so that the data can be easily summarized and visualized. PCA works by iteratively finding the vector such that the projection of the data onto this vector best captures the variance in the data. The following vectors, or components, are then identified to capture the remaining variance in the data while being orthogonal to the previous components. Mathmatically, the fist step of PCA analysis is to compute the covariance matrix of the data. The components are then identified as the eigenvectors of the covariance matrix.</p>
+<p>Now, what if we have 10 neurons, each with independent stimulus preferences. We’d like to be able to assess how these neurons could encode for stimuli as a population. However, we can’t effectively visualize the activity of 10 neurons over 10 trials and 4 stimuli. Instead, we can use principle component analysis (PCA) to reduce the activity of the population of neurons into 2 or 3 components.</p>
+<p>PCA reduces some features into a smaller number of components. In neuroscience, PCA is used to reduce the activity from some number of neurons into 2 or 3 components so that the data can be easily summarized and visualized. PCA works by iteratively finding the vector such that the projection of the data onto this vector best captures the variance in the data. The following vectors, or components, are then identified to capture the remaining variance in the data while being orthogonal to the previous components. Mathmatically, the fist step of PCA analysis is to compute the covariance matrix of the data. The components are then identified as the eigenvectors of the covariance matrix, and the variance each component captures is indicated by their eigenvalues.</p>
 <p>In interpreting the results of a PCA analysis, there are a few important points to remember. First, principle components are linear combinations of the initial variables: the actual output of a PCA decomposition is this weighting matrix, which must be multiplied with the original data to transform the data into PCA-space. Additionally, components are linearly uncorrelated with each other. Finally, since PCA iteratively captures as much variance as possible with each component, each subsequent component will capture less variance than the previous component <a class="reference external" href="#references">[4]</a>.</p>
 <p>In sklearn’s PCA function, the input matrix needs to be formatted such that the first dimension corresponds to each sample, and the second corresponds to each feature (here, neuron). We want to input all of our trials, regardless of the stimulus, into sklearn (but be able to organize by stimulus later), so here we’ll stack trials from different stimuli along the first dimension, creating a matrix that is (n_stim x n_trials) by n_units.</p>
 <div class="cell docutils container">
@@ -844,7 +851,8 @@ title="Print to PDF"
 <img alt="_images/3_ST_SpikeTrain_Analyses_23_0.png" src="_images/3_ST_SpikeTrain_Analyses_23_0.png" />
 </div>
 </div>
-<p>The stimuli are clearly separated in PCA space.</p>
+<p>The stimuli are clearly separated in PCA space. Here, we’ve only visualized this separation by stimuli, but it can be quantified as the degree of overlap of each stimulus separated distribution. This quantification can also occur in the original dimensionality of the data. Many papers will also quantify the separability of these distributions through machine learning. Usually, these methods investigate how well a simple machine learning algorithm can separate these distributions.</p>
+<p>These tutorials covered relatively general spike train analyses. The next tutorial, Spike_Synchrony, covers a particular area of interest to our lab.</p>
 </section>
 </section>
 <section id="references">
