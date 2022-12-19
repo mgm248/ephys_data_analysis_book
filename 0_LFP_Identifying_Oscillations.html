@@ -50,8 +50,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Coherence and Directionality" href="1_LFP_Coherence_Directionality.html" />
@@ -475,7 +473,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>Here, we have lfp data (already filtered + resampled to 1000Hz) from an electrode in the olfactory bulb, recording while odors are presented. The array stim_times indicates when odors are experienced (the first inhalation after each odor presentation), for 6 different odors, formatted as odors x events. We’ll start by plotting the lfp data around stimulus onset:</p>
+<p>Here, we have lfp data (already filtered + resampled to 1000Hz) from an electrode in the olfactory bulb of a mouse, recording while odors are presented. At 2 seconds into the recording, an odor is presented to the mouse, and it inhales. We’ll start by plotting the lfp data around stimulus onset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Plot the lfp data in response to stimulation</span>
